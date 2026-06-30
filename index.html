@@ -321,7 +321,7 @@
   <div class="subnav">
     <div class="wrap">
       <span class="loc"><span class="ic" data-icon="pin"></span>Deliver to Cloud Nine</span>
-      <a onclick="setCat('All')">All</a>
+      <a onclick="setCat('All')">Best Sellers</a>
       <a onclick="setCat('Electronics')">Electronics</a>
       <a onclick="setCat('Home')">Home</a>
       <a onclick="setCat('Beauty')">Beauty</a>
@@ -356,7 +356,6 @@
       </select>
     </div>
   </div>
-  <div class="cats" id="cats"></div>
   <div class="grid" id="grid"></div>
 </div>
 
@@ -407,7 +406,7 @@
 <!-- Confirmation + tracking modal -->
 <div class="modal" id="orderModal">
   <div class="sheet">
-    <button class="sheet-x" onclick="closeAll()">&times;</button>
+    <button class="sheet-x" onclick="orderX()">&times;</button>
     <div class="procview" id="procView"><div class="spinner"></div><div class="proctext" id="procText">Processing your order…</div></div>
     <div class="order-body" id="orderBody">
       <h2><span class="ic" data-icon="check" style="color:var(--teal)"></span>Order placed!</h2>
@@ -572,6 +571,7 @@ var PRODUCTS=RAW.map(function(x,i){
   var p={id:i+1,a:x[0],t:x[1],g:x[2],p:x[3]||19.99,r:x[4]||4.5,c:x[5]};
   p.rc=((p.id*977)%1900)+118; p.list=Math.round(p.p*1.27*100)/100; p.off=Math.round((1-p.p/p.list)*100);
   p.s = (p.id%4===0) ? "five" : "two"; // most 2-minute, every 4th 5-minute
+  p.fk=Math.random(); // featured shuffle key (re-randomised every page load)
   return p;
 });
 var CATS=["All","Electronics","Home","Beauty","Toys","Sports","Health","Pet","Books"];
@@ -624,11 +624,11 @@ function viewCart(){var t=document.getElementById("toast");t.classList.remove("s
 function shipBadge(p){return p.s==="five"?'<span class="shipbadge next">'+icon("clock")+' 5-minute delivery</span>':'<span class="shipbadge flash">'+icon("zap")+' 2-minute delivery</span>';}
 
 /* ---------- GRID ---------- */
-function renderCats(){document.getElementById("cats").innerHTML=CATS.map(function(c){return '<button class="'+(c===activeCat?"active":"")+'" onclick="setCat(\''+c+'\')">'+c+'</button>';}).join("");}
+function renderCats(){var el=document.getElementById("cats");if(!el)return;el.innerHTML=CATS.map(function(c){return '<button class="'+(c===activeCat?"active":"")+'" onclick="setCat(\''+c+'\')">'+c+'</button>';}).join("");}
 function setCat(c){activeCat=c;document.getElementById("q").value="";renderCats();renderGrid();window.scrollTo({top:0,behavior:"smooth"});}
 function setSort(v){sortMode=v;renderGrid();}
 function goHome(){activeCat="All";document.getElementById("q").value="";renderCats();renderGrid();window.scrollTo({top:0,behavior:"smooth"});}
-function sortList(a){a=a.slice();if(sortMode==="price-asc")a.sort(function(x,y){return x.p-y.p;});else if(sortMode==="price-desc")a.sort(function(x,y){return y.p-x.p;});else if(sortMode==="rating")a.sort(function(x,y){return y.r-x.r;});else if(sortMode==="off")a.sort(function(x,y){return y.off-x.off;});return a;}
+function sortList(a){a=a.slice();if(sortMode==="price-asc")a.sort(function(x,y){return x.p-y.p;});else if(sortMode==="price-desc")a.sort(function(x,y){return y.p-x.p;});else if(sortMode==="rating")a.sort(function(x,y){return y.r-x.r;});else if(sortMode==="off")a.sort(function(x,y){return y.off-x.off;});else a.sort(function(x,y){return x.fk-y.fk;});return a;}
 function renderGrid(list){
   var items=list||PRODUCTS.filter(function(p){return activeCat==="All"||p.c===activeCat;});
   items=sortList(items);
@@ -724,6 +724,7 @@ function applyCode(code,silent){code=(code||"").trim().toUpperCase();if(CODES[co
 function applyTyped(){applyCode(document.getElementById("promo").value);}
 function removeCode(){appliedCode=null;renderCart();}
 function renderCart(){
+  try{localStorage.setItem("pnc_cart",JSON.stringify(cart));}catch(e){}
   var n=cartCount();document.getElementById("cartCount").textContent=n;var fc=document.getElementById("floatCount");if(fc)fc.textContent=n;
   var box=document.getElementById("ditems");
   if(!cart.length){box.innerHTML='<div class="empty">Your cart is empty.<br>Go on, add something you can\'t afford.</div>';document.getElementById("dfoot").innerHTML='<button class="checkout" disabled style="opacity:.5">Proceed to checkout</button>';return;}
@@ -771,12 +772,12 @@ function closeAll(){trackRunning=false;clearInterval(procInt);clearTimeout(stage
 function show(id){document.getElementById(id).classList.add("show");document.getElementById("scrim").classList.add("show");syncLock();}
 
 /* ---------- ORDER + TRACKING ---------- */
-var lastOrderTotal=0, procInt=null;
+var lastOrderTotal=0, procInt=null, revealed=false;
 var CATSTEP={Electronics:"Charging it to 100%",Home:"Bubble-wrapping it with love",Beauty:"Mixing your potion at the Phantom counter",Toys:"Inflating the fun",Sports:"Pumping it up for the big game",Health:"Stacking the (imaginary) shelf",Pet:"Sneaking it past the warehouse cat",Books:"Printing and binding it just for you"};
 function dominantCat(){var ct={},best="Home",bn=0;cart.forEach(function(i){var c=byId(i.id).c;ct[c]=(ct[c]||0)+i.qty;if(ct[c]>bn){bn=ct[c];best=c;}});return best;}
 function placeOrder(){
   var s=null,o=computeOpts();for(var k=0;k<o.length;k++)if(o[k].key===selectedShip)s=o[k];if(!s)s=o[1];
-  lastOrderTotal=cartFinal()+s.cost; TRACK_MS=s.ms; orderCat=dominantCat();
+  lastOrderTotal=cartFinal()+s.cost; TRACK_MS=s.ms; orderCat=dominantCat(); revealed=false;
   document.getElementById("checkoutModal").classList.remove("show");
   document.getElementById("orderBody").classList.add("hide");
   document.getElementById("procView").classList.add("show");
@@ -917,7 +918,9 @@ function initDriverDrag(){
   window.addEventListener("pointerup",function(){if(!dragging)return;dragging=false;if(!moved&&stageIdx===2)nudge(0.06);});
   window.addEventListener("resize",function(){if(stageIdx===2&&document.getElementById("orderModal").classList.contains("show"))positionDriver();});
 }
-function reveal(){saved+=lastOrderTotal;localStorage.setItem("pnc_saved",String(saved));updateSaved();document.getElementById("revealAmt").textContent=moneyShort(lastOrderTotal);document.getElementById("reveal").classList.add("show");document.getElementById("tstatus").textContent="";beep(523);confetti();cart=[];appliedCode=null;renderCart();}
+function reveal(){if(revealed)return;revealed=true;saved+=lastOrderTotal;localStorage.setItem("pnc_saved",String(saved));updateSaved();document.getElementById("revealAmt").textContent=moneyShort(lastOrderTotal);document.getElementById("reveal").classList.add("show");document.getElementById("orderBody").classList.remove("hide");document.getElementById("procView").classList.remove("show");document.getElementById("tstatus").textContent="";beep(523);confetti();cart=[];appliedCode=null;renderCart();}
+function orderX(){if(revealed)closeAll();else skipToReveal();}
+function skipToReveal(){clearTimeout(stageTimer);clearInterval(procInt);trackRunning=false;arrived=true;reveal();}
 
 /* ---------- REAL SHOP ---------- */
 var realProduct=null;
@@ -943,13 +946,14 @@ function confetti(){var c=document.getElementById("confetti"),x=c.getContext("2d
 function initBackdrops(){
   document.getElementById("detailModal").addEventListener("click",function(e){if(e.target===this)closeDetail();});
   document.getElementById("checkoutModal").addEventListener("click",function(e){if(e.target===this)closeAll();});
-  document.getElementById("orderModal").addEventListener("click",function(e){if(e.target===this)closeAll();});
+  document.getElementById("orderModal").addEventListener("click",function(e){if(e.target===this){if(revealed)closeAll();else toast("Tap × to skip ahead — your savings are safe.","info");}});
   document.getElementById("realModal").addEventListener("click",function(e){if(e.target===this)closeReal();});
-  document.addEventListener("keydown",function(e){if(e.key==="Escape")closeAll();});
+  document.addEventListener("keydown",function(e){if(e.key==="Escape"){if(document.getElementById("orderModal").classList.contains("show")&&!revealed)return;closeAll();}});
 }
 
 /* ---------- INIT ---------- */
 function initFloatCart(){var fc=document.getElementById("floatcart");window.addEventListener("scroll",function(){if(window.scrollY>150)fc.classList.add("show");else fc.classList.remove("show");},{passive:true});}
+try{cart=JSON.parse(localStorage.getItem("pnc_cart")||"[]").filter(function(i){return i&&byId(i.id)&&i.qty>0;});}catch(e){cart=[];}
 mountIcons();initDriverDrag();initBackdrops();initFloatCart();renderCats();renderGrid();renderCoupons();renderCart();updateSaved();
 </script>
 </body>
