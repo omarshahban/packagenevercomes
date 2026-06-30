@@ -77,7 +77,7 @@
 
   /* Hero banner (image) */
   .hero{margin:14px 0;border-radius:var(--radius);overflow:hidden;line-height:0}
-  .hero-img{width:100%;height:185px;object-fit:cover;object-position:center;display:block;border-radius:var(--radius)}
+  .hero-img{width:100%;height:auto;display:block;border-radius:var(--radius)}
 
   .toolbar{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:6px 0 14px;flex-wrap:wrap}
   .t-search{flex:1;min-width:170px;display:flex;align-items:center;gap:8px;background:#fff;border:1.5px solid var(--line);border-radius:11px;padding:9px 13px;color:var(--muted)}
@@ -295,7 +295,6 @@
     .cart-tx{display:none}
     .saved-chip{padding:4px 8px} .saved-chip span{font-size:13px} .saved-chip small{font-size:8px}
     .hero{margin:12px 0}
-    .hero-img{height:auto;object-fit:contain}
     .detail-grid{grid-template-columns:1fr}
     .detail-media{border-radius:20px 20px 0 0;padding:12px}
     .detail-media img{max-height:200px}
@@ -335,7 +334,10 @@
 </header>
 
 <div class="wrap">
-  <section class="hero"><img class="hero-img" src="/hero-banner.png?v=2" alt="All the dopamine of shopping. None of the spending. Free dopamine, $0 spent." /></section>
+  <section class="hero"><picture>
+    <source media="(max-width:600px)" srcset="/hero-mobile.png?v=1" />
+    <img class="hero-img" src="/hero-desktop.png?v=1" alt="All the dopamine. None of the spending. Free dopamine, $0 spent." />
+  </picture></section>
 
   <div class="toolbar">
     <form class="t-search" onsubmit="return doSearch(event)">
