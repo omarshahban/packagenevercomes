@@ -46,7 +46,8 @@
   .subnav .loc{display:flex;align-items:center;gap:5px;color:var(--ink);font-weight:800;white-space:nowrap}
   .subnav a{white-space:nowrap;font-weight:600;text-decoration:none;cursor:pointer}
   .subnav a:hover{color:var(--coral)}
-  .subnav .swipe{display:flex;align-items:center;gap:3px;color:var(--coral);font-weight:800;font-size:12px;white-space:nowrap;padding-right:24px}
+  .subnav .wrap>*{flex:none}
+  .subnav .chev{position:absolute;right:8px;top:50%;transform:translateY(-50%);color:var(--coral);font-size:18px;z-index:3;pointer-events:none;display:flex}
 
   /* Hero — slim */
   .hero{background:linear-gradient(125deg,#E14328,#F47B2E);color:#fff;border-radius:var(--radius);margin:14px 0;padding:14px 18px}
@@ -264,8 +265,8 @@
       <a onclick="setCat('Books')">Books</a>
       <a href="#coupons">Coupons</a>
       <a href="#faq">Help</a>
-      <span class="swipe">swipe &rsaquo;</span>
     </div>
+    <span class="chev" data-icon="chev"></span>
   </div>
 </header>
 
@@ -419,7 +420,8 @@ var ICONS={
   warn:STROKE+'<path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>',
   sort:STROKE+'<line x1="4" y1="6" x2="20" y2="6"/><line x1="6" y1="12" x2="18" y2="12"/><line x1="9" y1="18" x2="15" y2="18"/></svg>',
   tag:STROKE+'<path d="M20.59 13.41 13.42 20.58a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>',
-  leaf:STROKE+'<path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.52-4.48 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6"/></svg>'
+  leaf:STROKE+'<path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.52-4.48 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6"/></svg>',
+  chev:STROKE+'<polyline points="9 18 15 12 9 6"/></svg>'
 };
 function icon(name){return ICONS[name]||'';}
 function mountIcons(root){(root||document).querySelectorAll('[data-icon]').forEach(function(el){el.innerHTML=icon(el.getAttribute('data-icon'));});}
