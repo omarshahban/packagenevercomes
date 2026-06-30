@@ -874,12 +874,12 @@ function renderDeparture(){
     setTimeout(function(){
       var sc=document.getElementById("scene");var r=sc.getBoundingClientRect();
       var tx=(24/300*r.width),ty=(118/140*r.height);
-      dt.classList.remove("shake");
-      dt.style.transition="left .8s ease-in, top .8s ease-in, transform .8s ease-in, opacity .8s";
+      dt.classList.remove("shake");dt.style.animation="none";
+      dt.style.transition="left 1s ease-in-out, top 1s ease-in-out, transform 1s ease-in-out, opacity 1s";
       dt.style.left=tx+"px";dt.style.top=ty+"px";dt.style.transform="translate(-50%,-50%) scale(.45)";dt.style.opacity="0.5";
       setCap("Rolling out…");
-      setTimeout(nextStage,820);
-    },900);
+      setTimeout(nextStage,1020);
+    },600);
   });
   stageTimer=setTimeout(nextStage,Math.max(5000,TRACK_MS*0.12));
 }
