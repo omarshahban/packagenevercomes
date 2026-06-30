@@ -64,8 +64,9 @@
   .saved-chip small .nb{font-weight:900;color:var(--ink)}
   .cartbtn{position:relative;display:flex;align-items:center;gap:6px;background:none;color:var(--coral);border-radius:11px;padding:6px 4px;font-weight:900;font-size:15px}
   .cartbtn .ic{font-size:21px;stroke-width:2.4}
-  .tipbtn-h{background:none;color:var(--coral);display:flex;align-items:center;justify-content:center;padding:6px 4px;font-size:21px}
-  .tipbtn-h .ic{stroke-width:2.4}
+  .donatebtn{display:flex;align-items:center;gap:6px;background:var(--coral);color:#fff;font-weight:900;font-size:14px;padding:8px 13px;border-radius:11px;white-space:nowrap}
+  .donatebtn .ic{font-size:16px;stroke-width:2.4}
+  .donatebtn:active{transform:scale(.98)}
   .cartbtn .count{position:absolute;top:-4px;right:-5px;background:var(--coral);color:#fff;min-width:19px;height:19px;border-radius:10px;font-size:11px;font-weight:900;display:flex;align-items:center;justify-content:center;padding:0 5px;transition:transform .15s}
 
   .subnav{position:relative;border-top:1px solid var(--line);background:#fff}
@@ -304,6 +305,8 @@
     .bar{gap:8px}
     .logo{font-size:16px} .logo .ic{font-size:20px}
     .cart-tx{display:none}
+    .donatebtn .dtx{display:none}
+    .donatebtn{padding:7px 9px;font-size:16px}
     .saved-chip{padding:4px 8px} .saved-chip span{font-size:13px} .saved-chip small{font-size:8px}
     .hero{margin:12px 0}
     .detail-grid{grid-template-columns:1fr}
@@ -324,7 +327,7 @@
   <div class="wrap bar">
     <div class="logo" onclick="goHome()"><span class="ic" data-icon="package"></span><span class="full">Package<span class="never">NeverComes</span></span></div>
     <div class="bar-sp"></div>
-    <button class="tipbtn-h" onclick="openTip()" aria-label="Leave a tip"><span class="ic" data-icon="heart"></span></button>
+    <button class="donatebtn" onclick="openTip()" aria-label="Donate"><span class="ic" data-icon="heart"></span><span class="dtx">Donate</span></button>
     <div class="saved-chip" title="Money you haven't spent"><small><b class="nb">not</b> spent</small><span id="savedChip">$0</span></div>
     <button class="cartbtn" onclick="openCart()"><span class="ic" data-icon="cart"></span><span class="cart-tx">Cart</span><span class="count" id="cartCount">0</span></button>
   </div>
