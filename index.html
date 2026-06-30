@@ -1003,7 +1003,7 @@ function confetti(){var c=document.getElementById("confetti"),x=c.getContext("2d
 function initBackdrops(){
   document.getElementById("detailModal").addEventListener("click",function(e){if(e.target===this)closeDetail();});
   document.getElementById("checkoutModal").addEventListener("click",function(e){if(e.target===this)closeAll();});
-  document.getElementById("orderModal").addEventListener("click",function(e){if(e.target===this){if(revealed)closeAll();else toast("Tap × to skip ahead — your savings are safe.","info");}});
+  document.getElementById("orderModal").addEventListener("click",function(e){if(e.target===this){if(revealed)closeAll();else toast("Tap × to skip ahead. Your savings are safe.","info");}});
   document.getElementById("realModal").addEventListener("click",function(e){if(e.target===this)closeReal();});
   document.getElementById("tipModal").addEventListener("click",function(e){if(e.target===this)closeAll();});
   document.addEventListener("keydown",function(e){if(e.key==="Escape"){if(document.getElementById("orderModal").classList.contains("show")&&!revealed)return;closeAll();}});
