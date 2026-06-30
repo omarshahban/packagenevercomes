@@ -16,6 +16,7 @@
   }
   *{box-sizing:border-box;min-width:0}
   html,body{overflow-x:hidden;width:100%;max-width:100%}
+  body.noscroll{overflow:hidden;touch-action:none}
   body{margin:0;font-family:'Lato',-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased}
   a{color:inherit}
   img{max-width:100%}
@@ -69,7 +70,7 @@
   .sortwrap{display:flex;align-items:center;gap:7px;font-size:13px;color:var(--muted);font-weight:700}
   .sortwrap select{font-family:inherit;font-weight:700;font-size:13px;color:var(--ink);background:#fff;border:1.5px solid var(--line);border-radius:10px;padding:7px 9px;cursor:pointer}
 
-  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px;padding-bottom:30px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,200px),1fr));gap:14px;padding-bottom:30px}
   .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;display:flex;flex-direction:column;box-shadow:var(--shadow);transition:transform .15s}
   .card:hover{transform:translateY(-3px)}
   .thumb{position:relative;aspect-ratio:1/1;background:#fff;display:flex;align-items:center;justify-content:center;padding:14px;cursor:pointer}
@@ -91,10 +92,10 @@
   .add:active,.buynow:active{transform:scale(.98)}
   .buyreal{background:none;color:var(--muted);font-size:12px;font-weight:600;padding:2px;text-decoration:underline}
 
-  .coupons{padding:6px 0 32px}
+  .coupons{padding-top:6px;padding-bottom:32px}
   .coupons h2{font-size:21px;letter-spacing:-.02em;margin:0 0 4px}
   .coupons .lead{color:var(--muted);margin:0 0 14px;font-size:14px}
-  .cgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px}
+  .cgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,230px),1fr));gap:12px}
   .coupon{display:flex;align-items:center;gap:11px;background:#fff;border:1.5px dashed var(--coral);border-radius:14px;padding:13px}
   .coupon .cic{color:var(--coral);font-size:22px;flex:none}
   .coupon .cinfo{flex:1;min-width:0}
@@ -102,15 +103,16 @@
   .coupon .cdesc{font-size:12px;color:var(--muted);margin-top:2px;line-height:1.35}
   .coupon button{background:var(--coral);color:#fff;font-weight:900;font-size:12px;padding:8px 11px;border-radius:9px;white-space:nowrap}
 
-  .scrim{position:fixed;inset:0;background:rgba(46,33,27,.45);z-index:50;opacity:0;pointer-events:none;transition:.2s}
+  .scrim{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:50;opacity:0;pointer-events:none;transition:.2s;touch-action:none}
   .scrim.show{opacity:1;pointer-events:auto}
-  .drawer{position:fixed;top:0;right:0;height:100%;width:400px;max-width:92vw;background:#fff;z-index:60;transform:translateX(100%);transition:transform .25s;display:flex;flex-direction:column}
+  .scrim.dark{background:rgba(0,0,0,.78)}
+  .drawer{position:fixed;top:0;right:0;height:100%;width:360px;max-width:84vw;background:#fff;z-index:60;transform:translateX(100%);transition:transform .25s;display:flex;flex-direction:column;overscroll-behavior:contain}
   .drawer.show{transform:translateX(0)}
   .dhead{padding:17px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;font-weight:900;font-size:18px}
   .dhead span{display:flex;align-items:center;gap:8px}
   .x{background:none;font-size:22px;color:var(--muted);line-height:1;width:30px;height:30px;border-radius:8px}
   .x:hover{background:var(--line)}
-  .ditems{flex:1;overflow:auto;padding:6px 17px}
+  .ditems{flex:1;overflow:auto;padding:6px 17px;overscroll-behavior:contain}
   .crow{display:flex;gap:11px;padding:11px 0;border-bottom:1px solid var(--line)}
   .crow img{width:54px;height:54px;object-fit:contain;background:#fff;border:1px solid var(--line);border-radius:10px;padding:4px}
   .crow .ci{flex:1;min-width:0}
@@ -167,7 +169,7 @@
 
   .detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:0}
   .detail-media{padding:22px;background:#fff;border-radius:20px 0 0 20px;display:flex;align-items:center;justify-content:center}
-  .detail-media img{max-width:100%;max-height:210px;object-fit:contain}
+  .detail-media img{max-width:100%;max-height:300px;object-fit:contain}
   .detail-info{padding:22px;overflow:visible}
   .detail-info h3{margin:2px 0 6px;font-size:20px;line-height:1.25;letter-spacing:-.01em}
   .detail-info .desc{color:var(--ink);font-size:14px;line-height:1.55;margin:10px 0 14px}
@@ -180,6 +182,20 @@
   .rev .rh{display:flex;align-items:center;gap:8px;font-size:12px;font-weight:800}
   .rev .rh .row{color:var(--gold);display:inline-flex}
   .rev .rt{font-size:13px;color:var(--muted);margin-top:2px;line-height:1.45}
+  .detail-top{position:sticky;top:0;height:0;z-index:6}
+  .detail-top .sheet-x{box-shadow:0 2px 8px rgba(60,25,10,.2)}
+  .tabs{display:flex;border-bottom:1.5px solid var(--line);margin-top:14px}
+  .tabs button{flex:1;background:none;padding:9px;font-weight:800;font-size:13px;color:var(--muted);border-bottom:2px solid transparent;margin-bottom:-1.5px}
+  .tabs button.act{color:var(--coral);border-bottom-color:var(--coral)}
+  .tabpane{display:none;font-size:14px;line-height:1.55;color:var(--muted);padding-top:10px}
+  .tabpane.act{display:block}
+  .alsorow{margin-top:14px;border-top:1px solid var(--line);padding-top:10px}
+  .alsolbl{font-size:13px;font-weight:900;margin-bottom:8px;color:var(--ink)}
+  .alsoscroll{display:flex;gap:10px;overflow-x:auto;scrollbar-width:none}
+  .alsoscroll::-webkit-scrollbar{display:none}
+  .alsoitem{flex:none;width:74px;text-align:center;cursor:pointer}
+  .alsoitem img{width:66px;height:66px;object-fit:contain;background:#fff;border:1px solid var(--line);border-radius:10px;padding:5px}
+  .alsot{font-size:11px;font-weight:700;margin-top:4px;line-height:1.2;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 
   .ordernum{background:#FFFBF8;border:1px solid var(--line);border-radius:10px;padding:10px;text-align:center;font-weight:700;margin:10px 0 16px;font-size:14px}
   .track{margin:14px 0}
@@ -212,7 +228,7 @@
   .warnbox .ic{color:var(--red);font-size:17px;margin-top:1px;flex:none}
   .disc{font-size:11px;color:var(--muted);text-align:center;margin-top:10px}
 
-  .faq{padding:8px 0 36px}
+  .faq{padding-top:8px;padding-bottom:36px}
   .faq h2{font-size:21px;letter-spacing:-.02em;margin:0 0 4px}
   .faq .lead{color:var(--muted);margin:0 0 14px;font-size:14px}
   .qa{background:#fff;border:1px solid var(--line);border-radius:14px;padding:13px 15px;margin-bottom:9px}
@@ -242,7 +258,7 @@
     .hero h1{font-size:16px}
     .detail-grid{grid-template-columns:1fr}
     .detail-media{border-radius:20px 20px 0 0;padding:12px}
-    .detail-media img{max-height:120px}
+    .detail-media img{max-height:200px}
     .detail-info{padding:16px}
     .detail-info h3{font-size:17px}
     .detail-info .desc{margin:8px 0 10px;font-size:13px}
@@ -604,34 +620,41 @@ function renderDetail(){
   var p=byId(detailId);if(!p)return;
   var revs=reviewsFor(p);
   var also=PRODUCTS.filter(function(x){return x.id!==p.id&&x.c===p.c;}).slice(0,4);if(also.length<4)also=PRODUCTS.filter(function(x){return x.id!==p.id;}).slice(0,4);
-  var html='<button class="sheet-x" onclick="closeDetail()">&times;</button><div class="detail-grid">'+
+  var revHtml=revs.map(function(rv){var s="";for(var i=0;i<5;i++)s+=icon(i<rv.stars?"star":"staro");return '<div class="rev"><div class="rh"><span>'+rv.name+'</span><span class="row">'+s+'</span></div><div class="rt">'+rv.text+'</div></div>';}).join("");
+  var alsoHtml=also.map(function(a){return '<div class="alsoitem" onclick="openDetail('+a.id+')"><img src="'+IMG+a.g+'"><div class="alsot">'+a.t+'</div></div>';}).join("");
+  var html='<div class="detail-top"><button class="sheet-x" onclick="closeDetail()">&times;</button></div>'+
+    '<div class="detail-grid">'+
     '<div class="detail-media"><img src="'+IMG+p.g+'" alt="'+p.t.replace(/"/g,'')+'"></div>'+
     '<div class="detail-info">'+
       shipBadge(p)+
       '<h3>'+p.t+'</h3>'+
-      '<div class="stars">'+starRow(p.r)+'<b>'+p.r.toFixed(1)+'</b><span>('+p.rc.toLocaleString("en-US")+' ratings)</span></div>'+
-      '<div class="price" style="margin-top:8px">'+money(p.p)+'<small>'+money(p.list)+'</small> <span style="color:var(--coral);font-size:13px">-'+p.off+'%</span></div>'+
-      '<p class="desc">'+descFor(p)+'</p>'+
+      '<div class="stars">'+starRow(p.r)+'<b>'+p.r.toFixed(1)+'</b><span>('+p.rc.toLocaleString("en-US")+')</span></div>'+
+      '<div class="price" style="margin-top:6px">'+money(p.p)+'<small>'+money(p.list)+'</small> <span style="color:var(--coral);font-size:13px">-'+p.off+'%</span></div>'+
       '<div class="qtypick"><span style="font-weight:800;font-size:13px;color:var(--muted)">Qty</span><button class="b" onclick="detailQty(-1)">&minus;</button><span class="v" id="detailQtyV">1</span><button class="b" onclick="detailQty(1)">+</button></div>'+
       '<div class="btns">'+
         '<button class="add" onclick="addFromDetail()">'+icon("cart")+' Add to cart</button>'+
         '<button class="buynow" onclick="buyNowDetail()">Buy now</button>'+
         '<button class="buyreal" onclick="openReal('+p.id+')">or buy it for real</button>'+
       '</div>'+
-      '<div class="reviews"><h4>What non-buyers are saying</h4>'+
-        revs.map(function(rv){var s="";for(var i=0;i<5;i++)s+=icon(i<rv.stars?"star":"staro");return '<div class="rev"><div class="rh"><span>'+rv.name+'</span><span class="row">'+s+'</span></div><div class="rt">'+rv.text+'</div></div>';}).join("")+
-      '</div>'+
-      '<div class="reviews"><h4>You might also crave</h4><div style="display:flex;gap:10px;overflow-x:auto">'+
-        also.map(function(a){return '<div style="text-align:center;cursor:pointer;flex:none;width:78px" onclick="openDetail('+a.id+')"><img src="'+IMG+a.g+'" style="width:68px;height:68px;object-fit:contain;background:#fff;border:1px solid var(--line);border-radius:10px;padding:5px"><div style="font-size:11px;font-weight:700;margin-top:4px;line-height:1.2;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden">'+a.t+'</div></div>';}).join("")+
-      '</div></div>'+
+      '<div class="tabs"><button class="act" id="tabBtnDesc" onclick="switchTab(\'desc\')">Description</button><button id="tabBtnRev" onclick="switchTab(\'rev\')">Reviews</button></div>'+
+      '<div class="tabpane act" id="tabDesc">'+descFor(p)+'</div>'+
+      '<div class="tabpane" id="tabRev">'+revHtml+'</div>'+
+      '<div class="alsorow"><div class="alsolbl">You might also crave</div><div class="alsoscroll">'+alsoHtml+'</div></div>'+
     '</div></div>';
   document.getElementById("detailBody").innerHTML=html;
   mountIcons(document.getElementById("detailBody"));
 }
+function switchTab(t){
+  document.getElementById("tabDesc").classList.toggle("act",t==="desc");
+  document.getElementById("tabRev").classList.toggle("act",t==="rev");
+  document.getElementById("tabBtnDesc").classList.toggle("act",t==="desc");
+  document.getElementById("tabBtnRev").classList.toggle("act",t==="rev");
+}
 function detailQty(d){detailQtyVal=Math.max(1,detailQtyVal+d);document.getElementById("detailQtyV").textContent=detailQtyVal;}
 function addFromDetail(){addToCart(detailId,document.querySelector("#detailBody .detail-media img"),detailQtyVal);}
 function buyNowDetail(){addToCart(detailId,null,detailQtyVal);closeDetail();openCheckout();}
-function closeDetail(){document.getElementById("detailModal").classList.remove("show");document.getElementById("scrim").classList.remove("show");}
+function closeDetail(){document.getElementById("detailModal").classList.remove("show");if(!anyOpenExcept("detailModal"))document.getElementById("scrim").classList.remove("show");syncLock();}
+function anyOpenExcept(id){var ms=document.querySelectorAll(".modal.show");for(var i=0;i<ms.length;i++){if(ms[i].id!==id)return true;}return document.getElementById("drawer").classList.contains("show");}
 
 /* ---------- FLY TO CART ---------- */
 function flyToCart(srcEl){
@@ -686,11 +709,13 @@ function selectShip(k){selectedShip=k;renderShipBlock();}
 function toggleCombine(e){if(e)e.stopPropagation();combine=!combine;renderShipBlock();}
 
 /* ---------- DRAWER / MODALS ---------- */
-function openCart(){renderCart();document.getElementById("drawer").classList.add("show");document.getElementById("scrim").classList.add("show");}
-function closeCart(){document.getElementById("drawer").classList.remove("show");document.getElementById("scrim").classList.remove("show");}
+function anyOpen(){return !!document.querySelector(".modal.show")||document.getElementById("drawer").classList.contains("show");}
+function syncLock(){document.body.classList.toggle("noscroll",anyOpen());}
+function openCart(){renderCart();document.getElementById("drawer").classList.add("show");document.getElementById("scrim").classList.add("show");syncLock();}
+function closeCart(){document.getElementById("drawer").classList.remove("show");document.getElementById("scrim").classList.remove("show");syncLock();}
 function openCheckout(){if(!cart.length)return;closeCart();closeDetail();renderShipBlock();show("checkoutModal");}
-function closeAll(){trackRunning=false;["checkoutModal","orderModal","realModal","detailModal"].forEach(function(m){document.getElementById(m).classList.remove("show");});closeCart();document.getElementById("scrim").classList.remove("show");}
-function show(id){document.getElementById(id).classList.add("show");document.getElementById("scrim").classList.add("show");}
+function closeAll(){trackRunning=false;["checkoutModal","orderModal","realModal","detailModal"].forEach(function(m){document.getElementById(m).classList.remove("show");});closeCart();var sc=document.getElementById("scrim");sc.classList.remove("show");sc.classList.remove("dark");syncLock();}
+function show(id){document.getElementById(id).classList.add("show");document.getElementById("scrim").classList.add("show");syncLock();}
 
 /* ---------- ORDER + TRACKING ---------- */
 var lastOrderTotal=0;
@@ -739,8 +764,8 @@ function reveal(){saved+=lastOrderTotal;localStorage.setItem("pnc_saved",String(
 
 /* ---------- REAL SHOP ---------- */
 var realProduct=null;
-function openReal(id){realProduct=(typeof id==="number")?byId(id):(cart[0]?byId(cart[0].id):PRODUCTS[0]);document.getElementById("realLink").href=realProduct?realUrl(realProduct):"https://www.amazon.com/?tag="+AFFILIATE_TAG;show("realModal");}
-function closeReal(){document.getElementById("realModal").classList.remove("show");if(!document.getElementById("orderModal").classList.contains("show"))document.getElementById("scrim").classList.remove("show");}
+function openReal(id){realProduct=(typeof id==="number")?byId(id):(cart[0]?byId(cart[0].id):PRODUCTS[0]);document.getElementById("realLink").href=realProduct?realUrl(realProduct):"https://www.amazon.com/?tag="+AFFILIATE_TAG;show("realModal");document.getElementById("scrim").classList.add("dark");}
+function closeReal(){document.getElementById("realModal").classList.remove("show");document.getElementById("scrim").classList.remove("dark");if(!document.getElementById("orderModal").classList.contains("show"))document.getElementById("scrim").classList.remove("show");syncLock();}
 
 /* ---------- SHARE / SOUND / CONFETTI ---------- */
 function shareSavings(){var txt="I just \"bought\" "+moneyShort(lastOrderTotal)+" of stuff on PackageNeverComes and saved every penny. All the dopamine of shopping, none of the spending. packagenevercomes.com";if(navigator.share){navigator.share({text:txt}).catch(function(){});}else{navigator.clipboard.writeText(txt).then(function(){toast("Copied to clipboard!","check");},function(){alert(txt);});}}
