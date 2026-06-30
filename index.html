@@ -320,6 +320,7 @@
     <div class="wrap">
       <span class="loc"><span class="ic" data-icon="pin"></span>Deliver to Cloud Nine</span>
       <a onclick="setCat('All')">Best Sellers</a>
+      <a onclick="setCat('Luxury')">Luxury</a>
       <a onclick="setCat('Electronics')">Electronics</a>
       <a onclick="setCat('Home')">Home</a>
       <a onclick="setCat('Beauty')">Beauty</a>
@@ -562,7 +563,17 @@ var RAW=[
 ["1775293947","The Mistake: A Novel","811M8UKz6cL.jpg",13.27,4.2,"Books"],
 ["0593135229","Project Hail Mary: A Novel","91ENQs2KLAL.jpg",19.86,4.7,"Books"],
 ["1775293955","The Score: A Novel","81RN-v3p+wL.jpg",20.23,4.4,"Books"],
-["0593798430","The Correspondent: A Novel","81PndgdGCXL.jpg",27.82,4.6,"Books"]
+["0593798430","The Correspondent: A Novel","81PndgdGCXL.jpg",27.82,4.6,"Books"],
+["B00KX0WLHM","Rolex Day-Date President","71fq4-P1VML.jpg",27029.99,4.0,"Luxury"],
+["B000N021DQ","Rolex Submariner Date","71JkPZyThFL.jpg",21337.99,4.6,"Luxury"],
+["B0BVW93S9Y","Bang & Olufsen Beolab Speaker","61wqv0et-JL.jpg",6474.99,4.2,"Electronics"],
+["B0CCW93LCR","Gaggia Accademia Espresso Machine","718Pl+MnEtL.jpg",2532.99,3.7,"Home"],
+["B0F6YXCBWZ","La Mer The Night Recovery Concentrate","61ryszjt25L.jpg",924.99,4.5,"Beauty"],
+["B07WFHWVPF","LEGO Star Wars Millennium Falcon (UCS)","81UIrn8wmgL.jpg",2419.99,4.8,"Toys"],
+["B0GX6T9TZ4","JAGJOG Folding Treadmill","71tfOMxYDNL.jpg",839.99,4.4,"Sports"],
+["B0GH72R2V3","Full-Body Zero-Gravity Massage Chair","71UTfnFZp9L.jpg",56962.99,4.5,"Health"],
+["B0DTHVL2DW","PetSafe Automatic Litter System","71-m6uthvcL.jpg",782.99,3.5,"Pet"],
+["3836596261","TASCHEN: Norman Foster (XXL)","61qf0jTlq4L.jpg",498.99,5.0,"Books"]
 ];
 var PRODUCTS=RAW.map(function(x,i){
   var p={id:i+1,a:x[0],t:x[1],g:x[2],p:x[3]||19.99,r:x[4]||4.5,c:x[5]};
@@ -572,9 +583,10 @@ var PRODUCTS=RAW.map(function(x,i){
   p.fk=Math.random(); // featured shuffle key (re-randomised every page load)
   return p;
 });
-var CATS=["All","Electronics","Home","Beauty","Toys","Sports","Health","Pet","Books"];
+var CATS=["All","Luxury","Electronics","Home","Beauty","Toys","Sports","Health","Pet","Books"];
 
 var DESC={
+  Luxury:"The dream item you'd never actually buy. Pure aspirational dopamine, zero damage to your account.",
   Electronics:"The gadget everyone's adding to cart right now. Feel the upgrade, spend nothing.",
   Home:"A best-selling home upgrade. Fill the cart, skip the clutter and the bill.",
   Beauty:"Trending in everyone's basket. Glow up your dopamine, not your spending.",
