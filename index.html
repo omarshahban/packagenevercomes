@@ -297,6 +297,12 @@
   footer .brand{display:flex;align-items:center;gap:8px;font-weight:900;color:#fff;font-size:16px}
   footer .brand .ic{color:var(--coral)}
   footer b{color:#fff}
+  footer .ftagline{color:#cbb6a8}
+  footer .flinks{display:flex;flex-wrap:wrap;gap:18px;margin:4px 0 2px}
+  footer .flinks a{color:#e7d8cd;font-weight:700;text-decoration:none;font-size:13.5px}
+  footer .flinks a:hover{color:#fff}
+  footer .fcontact{font-size:13px;color:#b09a8c}
+  footer .fcontact a{color:#fff;text-decoration:underline}
   footer .legal{color:#b09a8c;font-size:12px;border-top:1px solid #4a392f;padding-top:14px;margin-top:6px}
 
   @media(max-width:600px){
@@ -486,7 +492,15 @@
 <footer>
   <div class="wrap">
     <div class="brand"><span class="ic" data-icon="package"></span>PackageNeverComes</div>
-    <div>All the dopamine of shopping, none of the spending. A playful simulator inspired by the viral "dopamine site" trend. <a href="/about" style="color:#fff;font-weight:700;text-decoration:underline">About PackageNeverComes</a></div>
+    <div class="ftagline">All the dopamine of shopping, none of the spending.</div>
+    <nav class="flinks">
+      <a href="/">Store</a>
+      <a href="/about">About</a>
+      <a href="/#coupons">Coupons</a>
+      <a href="/#faq">FAQ</a>
+      <a href="#" onclick="openTip();return false">Donate</a>
+    </nav>
+    <div class="fcontact">Get in touch: <a href="mailto:omar@wwapps.io">omar@wwapps.io</a></div>
     <div class="legal">
       PackageNeverComes is an independent satire/entertainment site. <b>Nothing here is for sale, no payment is processed, no card data is collected, and nothing ships.</b> Product names and images belong to their respective owners and are shown for reference. Not affiliated with, endorsed by, or connected to Amazon or any other retailer. "Go to the real shop" links may be affiliate links. As an Amazon Associate we earn from qualifying purchases.
     </div>
