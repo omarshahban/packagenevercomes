@@ -959,10 +959,19 @@ function setTransitStatus(){
 }
 function arriveHome(){positionDriver();var el=document.getElementById("eta");if(el)el.textContent="";document.getElementById("tstatus").innerHTML='<span style="color:var(--teal)">'+icon("check")+'</span> Congrats! Your dopamine has arrived!';var cap=document.getElementById("mapcap");if(cap)cap.innerHTML="";setTimeout(reveal,1300);}
 function nudge(amt){if(arrived||stageIdx!==2)return;prog=Math.min(1,prog+amt);positionDriver();setTransitStatus();updateEta();if(prog>=1)finishTrack();}
+function projProgress(cx,cy){
+  var sc=document.getElementById("scene"),path=document.getElementById("routeFill");
+  if(!sc||!path||!path.getTotalLength)return null;
+  var r=sc.getBoundingClientRect();
+  var vx=(cx-r.left)/r.width*300, vy=(cy-r.top)/r.height*140;
+  var len=path.getTotalLength(),best=0,bd=Infinity,N=160;
+  for(var i=0;i<=N;i++){var l=i/N*len;var p=path.getPointAtLength(l);var dx=p.x-vx,dy=p.y-vy,d=dx*dx+dy*dy;if(d<bd){bd=d;best=l/len;}}
+  return best;
+}
 function initDriverDrag(){
   var map=document.getElementById("trackmap");if(!map)return;
-  map.addEventListener("pointerdown",function(e){if(stageIdx!==2)return;var d=e.target.closest&&e.target.closest("#driver");if(!d)return;dragging=true;moved=false;try{d.setPointerCapture(e.pointerId);}catch(x){}e.preventDefault();});
-  window.addEventListener("pointermove",function(e){if(!dragging||stageIdx!==2)return;moved=true;var sc=document.getElementById("scene");if(!sc)return;var rect=sc.getBoundingClientRect();var pct=(e.clientX-rect.left)/rect.width*100;var np=(pct-8)/84;if(np<0)np=0;if(np>1)np=1;if(np>prog){prog=np;positionDriver();setTransitStatus();updateEta();if(prog>=1)finishTrack();}});
+  map.addEventListener("pointerdown",function(e){if(stageIdx!==2)return;dragging=true;moved=false;try{map.setPointerCapture(e.pointerId);}catch(x){}e.preventDefault();});
+  window.addEventListener("pointermove",function(e){if(!dragging||stageIdx!==2)return;moved=true;var np=projProgress(e.clientX,e.clientY);if(np!==null&&np>prog){prog=np;positionDriver();setTransitStatus();updateEta();if(prog>=1)finishTrack();}});
   window.addEventListener("pointerup",function(){if(!dragging)return;dragging=false;if(!moved&&stageIdx===2)nudge(0.06);});
   window.addEventListener("resize",function(){if(stageIdx===2&&document.getElementById("orderModal").classList.contains("show"))positionDriver();});
 }
