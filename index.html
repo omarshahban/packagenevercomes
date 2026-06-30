@@ -279,6 +279,7 @@
   .tipcard p{margin:0 auto 18px;color:var(--ink);font-size:14px;line-height:1.6;max-width:470px}
   .tipbtn{display:inline-flex;align-items:center;gap:8px;background:var(--coral);color:#fff;font-weight:900;font-size:15px;padding:13px 24px;border-radius:12px;text-decoration:none}
   .tipbtn:active{transform:scale(.98)}
+  .kofi-embed{border:none;width:100%;max-width:460px;height:680px;border-radius:12px;background:#f9f9f9;display:block;margin:4px auto 0}
 
   .toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--ink);color:#fff;padding:11px 18px;border-radius:12px;font-weight:800;font-size:14px;z-index:95;opacity:0;transition:.25s;pointer-events:none;display:flex;align-items:center;gap:8px;max-width:90vw}
   .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
@@ -384,7 +385,7 @@
     <span class="tipic" data-icon="heart"></span>
     <h2>Enjoying the dopamine?</h2>
     <p>This is the <b>only place on the entire site where you can actually spend real money</b>. A small tip keeps PackageNeverComes free, fast, and (mostly) ad-free. Completely optional, endlessly appreciated.</p>
-    <a class="tipbtn" id="kofiLink" href="#" target="_blank" rel="noopener"><span class="ic" data-icon="heart"></span> Leave a tip on Ko-fi</a>
+    <iframe class="kofi-embed" id="kofiframe" src="https://ko-fi.com/packagenevercomes/?hidefeed=true&widget=true&embed=true&preview=true" title="Tip PackageNeverComes on Ko-fi" loading="lazy"></iframe>
   </div>
 </section>
 
@@ -983,7 +984,6 @@ function initBackdrops(){
 /* ---------- INIT ---------- */
 function initFloatCart(){var fc=document.getElementById("floatcart");window.addEventListener("scroll",function(){if(window.scrollY>150)fc.classList.add("show");else fc.classList.remove("show");},{passive:true});}
 try{cart=JSON.parse(localStorage.getItem("pnc_cart")||"[]").filter(function(i){return i&&byId(i.id)&&i.qty>0;});}catch(e){cart=[];}
-var _kl=document.getElementById("kofiLink");if(_kl)_kl.href=KOFI;
 mountIcons();initDriverDrag();initBackdrops();initFloatCart();renderCats();renderGrid();renderCoupons();renderCart();updateSaved();
 </script>
 </body>
