@@ -80,8 +80,8 @@
   .subnav .wrap>*{flex:none}
 
   /* Hero banner (image) */
-  .hero{margin:14px 0;border-radius:var(--radius);overflow:hidden;line-height:0}
-  .hero-img{width:100%;height:auto;display:block;border-radius:var(--radius)}
+  .hero{margin:0;border-radius:0;overflow:hidden;line-height:0}
+  .hero-img{width:100%;height:auto;display:block;border-radius:0}
 
   .toolbar{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:6px 0 14px;flex-wrap:wrap}
   .t-search{flex:1;min-width:170px;display:flex;align-items:center;gap:8px;background:#fff;border:1.5px solid var(--line);border-radius:11px;padding:9px 13px;color:var(--muted)}
@@ -350,7 +350,7 @@
     .cart-tx{display:none}
     .donatebtn{padding:7px 11px;font-size:13px}
     .saved-chip{padding:4px 8px} .saved-chip span{font-size:13px} .saved-chip small{font-size:8px}
-    .hero{margin:12px 0}
+    .hero{margin:0}
     .detail-grid{grid-template-columns:1fr}
     .detail-media{border-radius:20px 20px 0 0;padding:12px}
     .detail-media img{max-height:200px}
@@ -392,12 +392,12 @@
   </div>
 </header>
 
-<div class="wrap">
-  <section class="hero"><picture>
-    <source media="(max-width:600px)" srcset="/hero-mobile.png?v=5" />
-    <img class="hero-img" src="/hero-desktop.png?v=5" alt="All the dopamine. None of the spending. Shopping for the love of the game. No real transactions." />
-  </picture></section>
+<section class="hero"><picture>
+  <source media="(max-width:600px)" srcset="/hero-mobile.png?v=5" />
+  <img class="hero-img" src="/hero-desktop.png?v=5" alt="All the dopamine. None of the spending. Shopping for the love of the game. No real transactions." />
+</picture></section>
 
+<div class="wrap">
   <div class="toolbar">
     <form class="t-search" onsubmit="return doSearch(event)">
       <span class="ic" data-icon="search"></span>
