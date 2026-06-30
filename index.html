@@ -70,7 +70,7 @@
   .donatebtn:active{transform:scale(.98)}
   .cartbtn .count{position:absolute;top:-4px;right:-5px;background:var(--coral);color:#fff;min-width:19px;height:19px;border-radius:10px;font-size:11px;font-weight:900;display:flex;align-items:center;justify-content:center;padding:0 5px;transition:transform .15s}
 
-  .subnav{position:relative;border-top:1px solid var(--line);background:#fff}
+  .subnav{position:relative;border-bottom:1px solid var(--line);background:#fff}
   .subnav .wrap{display:flex;align-items:center;gap:9px;padding:11px 16px;font-size:13.5px;color:var(--muted);overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
   .subnav .wrap::-webkit-scrollbar{display:none}
   .subnav:after{content:"";position:absolute;top:0;right:0;height:100%;width:40px;background:linear-gradient(90deg,rgba(255,255,255,0),#fff);pointer-events:none}
@@ -373,29 +373,30 @@
     <button class="saved-chip" onclick="openHistory()" title="View your order history"><small><b class="nb">not</b> spent</small><span id="savedChip">$0</span></button>
     <button class="cartbtn" onclick="openCart()"><span class="ic" data-icon="cart"></span><span class="cart-tx">Cart</span><span class="count" id="cartCount">0</span></button>
   </div>
-  <div class="subnav">
-    <div class="wrap">
-      <span class="loc"><span class="ic" data-icon="pin"></span>Deliver to Cloud Nine</span>
-      <a onclick="setCat('All')">Best Sellers</a>
-      <a onclick="setCat('Luxury')">Luxury</a>
-      <a onclick="setCat('Electronics')">Electronics</a>
-      <a onclick="setCat('Home')">Home</a>
-      <a onclick="setCat('Beauty')">Beauty</a>
-      <a onclick="setCat('Toys')">Toys</a>
-      <a onclick="setCat('Sports')">Sports</a>
-      <a onclick="setCat('Pet')">Pet</a>
-      <a onclick="setCat('Books')">Books</a>
-      <a href="#coupons">Coupons</a>
-      <a href="/about">About</a>
-      <a href="#faq">Help</a>
-    </div>
-  </div>
 </header>
 
 <section class="hero"><picture>
   <source media="(max-width:600px)" srcset="/hero-mobile.png?v=5" />
   <img class="hero-img" src="/hero-desktop.png?v=5" alt="All the dopamine. None of the spending. Shopping for the love of the game. No real transactions." />
 </picture></section>
+
+<div class="subnav">
+  <div class="wrap">
+    <span class="loc"><span class="ic" data-icon="pin"></span>Deliver to Cloud Nine</span>
+    <a onclick="setCat('All')">Best Sellers</a>
+    <a onclick="setCat('Luxury')">Luxury</a>
+    <a onclick="setCat('Electronics')">Electronics</a>
+    <a onclick="setCat('Home')">Home</a>
+    <a onclick="setCat('Beauty')">Beauty</a>
+    <a onclick="setCat('Toys')">Toys</a>
+    <a onclick="setCat('Sports')">Sports</a>
+    <a onclick="setCat('Pet')">Pet</a>
+    <a onclick="setCat('Books')">Books</a>
+    <a href="#coupons">Coupons</a>
+    <a href="/about">About</a>
+    <a href="#faq">Help</a>
+  </div>
+</div>
 
 <div class="wrap">
   <div class="toolbar">
