@@ -789,8 +789,9 @@ function placeOrder(){
     document.getElementById("procView").classList.remove("show");
     document.getElementById("orderBody").classList.remove("hide");
     var on="PNC-"+Math.floor(100000+Math.random()*899999);
-    document.getElementById("ordernum").textContent="Order "+on+" · "+s.label+" · arriving "+s.est;
-    document.getElementById("orderSub").textContent = selectedShip==="two"?"Hold tight, 2-minute delivery incoming.":"Your dopamine is on the way.";
+    document.getElementById("orderSub").textContent="Order "+on;
+    var scol=selectedShip==="two"?"var(--coral)":"var(--teal)";
+    document.getElementById("ordernum").innerHTML='<span style="color:'+scol+'">'+icon(s.ic)+'</span> '+s.label;
     document.getElementById("reveal").classList.remove("show");
     document.getElementById("tstatus").textContent="Confirming your order...";
     confetti(); runTracking();
@@ -905,7 +906,7 @@ function setTransitStatus(){
   var st=document.getElementById("tstatus");if(st)st.innerHTML=icon(ic2)+" "+msg;
   highlightSteps(idx);
 }
-function arriveHome(){positionDriver();var el=document.getElementById("eta");if(el)el.textContent="";document.getElementById("tstatus").innerHTML=icon("info")+" ...huh. It seems to have wandered off.";document.getElementById("hint").innerHTML="";setTimeout(reveal,1300);}
+function arriveHome(){positionDriver();var el=document.getElementById("eta");if(el)el.textContent="";document.getElementById("tstatus").innerHTML='<span style="color:var(--teal)">'+icon("check")+'</span> Congrats! Your dopamine has arrived!';var cap=document.getElementById("mapcap");if(cap)cap.innerHTML="";setTimeout(reveal,1300);}
 function nudge(amt){if(arrived||stageIdx!==2)return;prog=Math.min(1,prog+amt);positionDriver();setTransitStatus();updateEta();if(prog>=1)finishTrack();}
 function initDriverDrag(){
   var map=document.getElementById("trackmap");if(!map)return;
@@ -922,7 +923,17 @@ function openReal(id){realProduct=(typeof id==="number")?byId(id):(cart[0]?byId(
 function closeReal(){document.getElementById("realModal").classList.remove("show");document.getElementById("scrim").classList.remove("dark");if(!anyOpenExcept("realModal"))document.getElementById("scrim").classList.remove("show");syncLock();}
 
 /* ---------- SHARE / SOUND / CONFETTI ---------- */
-function shareSavings(){var txt="I just \"bought\" "+moneyShort(lastOrderTotal)+" of stuff on PackageNeverComes and saved every penny. All the dopamine of shopping, none of the spending. packagenevercomes.com";if(navigator.share){navigator.share({title:"PackageNeverComes",text:txt,url:"https://packagenevercomes.com"}).catch(function(){});}else{navigator.clipboard.writeText(txt+" https://packagenevercomes.com").then(function(){toast("Copied to clipboard!","check");},function(){alert(txt);});}}
+function shareSavings(){
+  var txt="My dopamine just arrived on PackageNeverComes. I \"bought\" "+moneyShort(lastOrderTotal)+" of stuff and didn't spend a penny. packagenevercomes.com";
+  var url="https://packagenevercomes.com";
+  function fallback(){if(navigator.share){navigator.share({title:"PackageNeverComes",text:txt,url:url}).catch(function(){});}else{navigator.clipboard.writeText(txt).then(function(){toast("Copied to clipboard!","check");},function(){alert(txt);});}}
+  if(navigator.canShare&&window.fetch){
+    fetch("/og-order.png?v=1").then(function(r){return r.blob();}).then(function(b){
+      var file=new File([b],"packagenevercomes.png",{type:"image/png"});
+      if(navigator.canShare({files:[file]})){navigator.share({files:[file],text:txt}).catch(fallback);}else fallback();
+    }).catch(fallback);
+  }else fallback();
+}
 var actx;function beep(freq){try{actx=actx||new (window.AudioContext||window.webkitAudioContext)();var o=actx.createOscillator(),g=actx.createGain();o.type="sine";o.frequency.value=freq;o.connect(g);g.connect(actx.destination);g.gain.setValueAtTime(.08,actx.currentTime);g.gain.exponentialRampToValueAtTime(.0001,actx.currentTime+.18);o.start();o.stop(actx.currentTime+.18);}catch(e){}}
 function confetti(){var c=document.getElementById("confetti"),x=c.getContext("2d");c.style.display="block";c.width=innerWidth;c.height=innerHeight;var cols=["#FF6B5B","#FFC23C","#0FAE9E","#FF9F4D","#FF8FA3"];var P=[];for(var i=0;i<120;i++){P.push({x:Math.random()*c.width,y:-20-Math.random()*c.height*.3,s:4+Math.random()*6,vy:2+Math.random()*4,vx:-2+Math.random()*4,col:cols[i%cols.length],rot:Math.random()*6});}var t=0;(function loop(){x.clearRect(0,0,c.width,c.height);t++;P.forEach(function(p){p.y+=p.vy;p.x+=p.vx;p.rot+=.1;x.save();x.translate(p.x,p.y);x.rotate(p.rot);x.fillStyle=p.col;x.fillRect(-p.s/2,-p.s/2,p.s,p.s*1.6);x.restore();});if(t<130)requestAnimationFrame(loop);else c.style.display="none";})();}
 
