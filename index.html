@@ -230,6 +230,13 @@
   .driver:active{cursor:grabbing}
   .eta{position:absolute;top:9px;right:10px;font-size:11px;font-weight:800;color:var(--muted);background:#fff;padding:3px 8px;border-radius:8px;border:1px solid var(--line);z-index:1}
   .hint{text-align:center;font-size:12px;color:var(--muted);margin-top:4px}
+  .mapcap{position:absolute;left:0;right:0;bottom:7px;text-align:center;z-index:4;pointer-events:none;padding:0 8px}
+  .mapcap span{display:inline-block;background:rgba(255,247,240,.92);color:var(--ink);font-size:12px;font-weight:700;padding:4px 11px;border-radius:9px;box-shadow:0 1px 4px rgba(60,25,10,.14);max-width:94%}
+  .mapcap b{color:var(--coral)}
+  .deptruck{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font-size:42px;color:var(--coral);z-index:5;opacity:0;filter:drop-shadow(0 3px 6px rgba(226,58,30,.45))}
+  .deptruck.show{opacity:1}
+  .deptruck.shake{animation:truckshake .09s infinite}
+  @keyframes truckshake{0%{transform:translate(-51%,-51%) rotate(-2deg)}50%{transform:translate(-49%,-49%) rotate(2deg)}100%{transform:translate(-51%,-49%) rotate(-2deg)}}
   .tsteps{display:flex;justify-content:space-between;font-size:10px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.02em}
   .tstatus{display:flex;align-items:center;justify-content:center;gap:7px;text-align:center;font-weight:700;margin-top:14px;min-height:22px}
   .reveal{text-align:center;background:var(--teal-bg);color:var(--teal);border-radius:14px;padding:18px;margin-top:14px;display:none}
@@ -608,6 +615,7 @@ function moneyShort(n){return "$"+Math.round(n).toLocaleString("en-US");}
 function starRow(r){var f=Math.round(r),s="";for(var i=0;i<5;i++)s+=icon(i<f?"star":"staro");return '<span class="row">'+s+'</span>';}
 function byId(id){return PRODUCTS.find(function(p){return p.id===id});}
 function toast(msg,ic,opts){opts=opts||{};var t=document.getElementById("toast");var btn=opts.btn?'<button class="toast-btn" onclick="'+(opts.act||'')+'">'+opts.btn+'</button>':'';t.innerHTML=(ic?icon(ic):"")+"<span>"+msg+"</span>"+btn;t.classList.add("show");clearTimeout(t._t);t._t=setTimeout(function(){t.classList.remove("show");},opts.dur||1900);}
+function setCap(html){var c=document.getElementById("mapcap");if(c)c.innerHTML='<span>'+html+'</span>';}
 function viewCart(){var t=document.getElementById("toast");t.classList.remove("show");openCart();}
 function shipBadge(p){return p.s==="five"?'<span class="shipbadge next">'+icon("clock")+' 5-minute delivery</span>':'<span class="shipbadge flash">'+icon("zap")+' 2-minute delivery</span>';}
 
@@ -793,7 +801,7 @@ var stageIdx=0, stageTimer=null, packNeed=1, packDone=0;
 var prog=0, dragging=false, moved=false, trackRunning=false, arrived=false, lastTs=null;
 
 function runTracking(){trackRunning=true;arrived=false;prog=0;dragging=false;stageIdx=0;packNeed=Math.min(3,Math.max(1,cartCount()));startStage(0);}
-function startStage(i){stageIdx=i;clearTimeout(stageTimer);if(STAGES[i]==="packing")renderPacking();else if(STAGES[i]==="departure")renderDeparture();else startTransit();}
+function startStage(i){stageIdx=i;clearTimeout(stageTimer);var h=document.getElementById("hint");if(h)h.innerHTML="";if(STAGES[i]==="packing")renderPacking();else if(STAGES[i]==="departure")renderDeparture();else startTransit();}
 function nextStage(){if(!trackRunning)return;if(stageIdx<STAGES.length-1)startStage(stageIdx+1);}
 function highlightSteps(idx){var sp=document.querySelectorAll('.tsteps span');for(var i=0;i<sp.length;i++){var on=i<=idx;sp[i].style.color=on?'var(--coral)':'';sp[i].style.fontWeight=on?'900':'';}}
 
@@ -804,9 +812,9 @@ function renderPacking(){
   document.getElementById("trackmap").innerHTML='<svg viewBox="0 0 300 140" preserveAspectRatio="none" style="position:absolute;inset:0;width:100%;height:100%">'+
     '<rect x="0" y="120" width="300" height="20" fill="#efe0d3"/>'+
     '<g transform="translate(56,52)"><circle cx="0" cy="0" r="13" fill="#e7b48f"/><rect x="-15" y="14" width="30" height="42" rx="9" fill="#0FAE9E"/></g>'+
-    '<rect x="20" y="98" width="58" height="28" rx="3" fill="#cdb6a6"/>'+boxes+'</svg>';
+    '<rect x="20" y="98" width="58" height="28" rx="3" fill="#cdb6a6"/>'+boxes+'</svg><div class="mapcap" id="mapcap"></div>';
   document.getElementById("tstatus").innerHTML=icon("package")+" Packing your order";
-  document.getElementById("hint").innerHTML="<b>Tap each box</b> to pack it. Pack all "+packNeed+" to ship faster!";
+  setCap("<b>Tap each box</b> to pack it. Pack all "+packNeed+" to speed it up!");
   highlightSteps(1);
   var gs=document.querySelectorAll("#trackmap .packbox");
   for(var j=0;j<gs.length;j++){gs[j].style.cursor="pointer";gs[j].addEventListener("click",function(){packBox(this);});}
@@ -816,8 +824,8 @@ function packBox(g){
   if(g.getAttribute("data-done"))return;
   g.setAttribute("data-done","1");g.querySelector(".packtick").style.display="";beep(700);packDone++;
   var left=packNeed-packDone;
-  if(left>0)document.getElementById("hint").innerHTML="<b>Keep tapping</b>, "+left+" box"+(left>1?"es":"")+" to go!";
-  else{document.getElementById("hint").innerHTML="All packed! Off to the truck…";clearTimeout(stageTimer);confetti();setTimeout(nextStage,550);}
+  if(left>0)setCap("<b>Keep tapping</b>, "+left+" box"+(left>1?"es":"")+" to go!");
+  else{setCap("All packed! Off to the truck…");clearTimeout(stageTimer);confetti();setTimeout(nextStage,550);}
 }
 
 /* STAGE 2,DEPARTURE */
@@ -825,21 +833,38 @@ function renderDeparture(){
   document.getElementById("trackmap").innerHTML='<svg viewBox="0 0 300 140" preserveAspectRatio="none" style="position:absolute;inset:0;width:100%;height:100%">'+
     '<rect x="12" y="14" width="276" height="112" rx="12" fill="#f3e7dd"/>'+
     '<rect x="12" y="98" width="276" height="28" fill="#d9c4b4"/>'+
-    '<circle cx="84" cy="72" r="36" fill="none" stroke="#5a4334" stroke-width="10"/>'+
-    '<rect x="50" y="68" width="68" height="8" rx="3" fill="#5a4334"/>'+
-    '<rect x="80" y="72" width="8" height="34" rx="3" fill="#5a4334"/>'+
-    '<circle cx="84" cy="72" r="11" fill="#5a4334"/>'+
-    '<circle cx="206" cy="74" r="15" fill="#5a4334"/><circle cx="206" cy="74" r="6" fill="#2f231b"/>'+
-    '<g id="keyG" style="cursor:pointer;transform-box:view-box;transform-origin:206px 74px;transition:transform .45s">'+
-      '<rect x="208" y="71" width="34" height="6" rx="2" fill="#FFC23C"/>'+
-      '<rect x="210" y="77" width="6" height="5" fill="#e0a823"/><rect x="219" y="77" width="5" height="5" fill="#e0a823"/>'+
-      '<circle cx="250" cy="74" r="12" fill="none" stroke="#FFC23C" stroke-width="6"/>'+
-    '</g></svg>';
+    '<circle cx="128" cy="72" r="33" fill="none" stroke="#5a4334" stroke-width="10"/>'+
+    '<rect x="98" y="68" width="60" height="8" rx="3" fill="#5a4334"/>'+
+    '<rect x="124" y="72" width="8" height="31" rx="3" fill="#5a4334"/>'+
+    '<circle cx="128" cy="72" r="10" fill="#5a4334"/>'+
+    '<circle cx="194" cy="74" r="14" fill="#5a4334"/><circle cx="194" cy="74" r="6" fill="#2f231b"/>'+
+    '<g id="keyG" style="cursor:pointer;transform-box:view-box;transform-origin:194px 74px;transition:transform .45s">'+
+      '<rect x="196" y="71" width="32" height="6" rx="2" fill="#FFC23C"/>'+
+      '<rect x="198" y="77" width="6" height="5" fill="#e0a823"/><rect x="207" y="77" width="5" height="5" fill="#e0a823"/>'+
+      '<circle cx="236" cy="74" r="12" fill="none" stroke="#FFC23C" stroke-width="6"/>'+
+    '</g></svg>'+
+    '<span class="deptruck" id="deptruck" data-icon="truck"></span>'+
+    '<div class="mapcap" id="mapcap"></div>';
+  mountIcons(document.getElementById("trackmap"));
   document.getElementById("tstatus").innerHTML=icon("truck")+" Waiting for departure";
-  document.getElementById("hint").innerHTML="<b>Turn the key</b> to start the truck and depart!";
+  setCap("<b>Turn the key</b> to start the truck and depart!");
   highlightSteps(2);
   var kg=document.getElementById("keyG");
-  if(kg)kg.addEventListener("click",function(){kg.style.transition="transform .4s";kg.style.transform="rotate(85deg)";beep(330);setTimeout(function(){beep(440);},150);document.getElementById("hint").innerHTML="Engine on! Rolling out…";clearTimeout(stageTimer);setTimeout(nextStage,700);});
+  if(kg)kg.addEventListener("click",function(){
+    kg.style.transition="transform .45s";kg.style.transform="rotate(85deg)";beep(330);setTimeout(function(){beep(440);},150);
+    setCap("Vroom! Engine started…");
+    var dt=document.getElementById("deptruck");dt.classList.add("show","shake");
+    clearTimeout(stageTimer);
+    setTimeout(function(){
+      var map=document.getElementById("trackmap");var r=map.getBoundingClientRect();
+      var tx=(24/300*r.width),ty=(118/140*r.height);
+      dt.classList.remove("shake");
+      dt.style.transition="left .8s ease-in, top .8s ease-in, transform .8s ease-in, opacity .8s";
+      dt.style.left=tx+"px";dt.style.top=ty+"px";dt.style.transform="translate(-50%,-50%) scale(.45)";dt.style.opacity="0.5";
+      setCap("Rolling out…");
+      setTimeout(nextStage,820);
+    },900);
+  });
   stageTimer=setTimeout(nextStage,Math.max(5000,TRACK_MS*0.12));
 }
 
@@ -851,8 +876,9 @@ function startTransit(){
     '<path id="routeBase" d="M 24 118 L 24 70 L 96 70 L 96 30 L 176 30 L 176 100 L 244 100 L 244 50 L 282 50" fill="none"/>'+
     '<path id="routeFill" d="M 24 118 L 24 70 L 96 70 L 96 30 L 176 30 L 176 100 L 244 100 L 244 50 L 282 50" fill="none"/>'+
     '<g transform="translate(262,30)"><polygon points="0,16 20,2 40,16" fill="#0FAE9E"/><rect x="6" y="16" width="28" height="22" fill="#bfe9e2"/><rect x="16" y="24" width="9" height="14" fill="#0FAE9E"/></g>'+
-    '</svg><span class="driver" id="driver" data-icon="truck"></span><div class="eta" id="eta"></div>';
+    '</svg><span class="driver" id="driver" data-icon="truck"></span><div class="eta" id="eta"></div><div class="mapcap" id="mapcap"></div>';
   mountIcons(document.getElementById("trackmap"));
+  setCap("<b>Drag the truck</b> through the streets to your door to speed it up!");
   prog=0;lastTs=null;arrived=false;
   positionDriver();setTransitStatus();updateEta();
   requestAnimationFrame(tickLoop);
@@ -875,7 +901,6 @@ function setTransitStatus(){
   else if(p<1){msg="Arriving now!";ic2="pin";idx=4;}
   else{msg="At your door...";ic2="home";idx=4;}
   var st=document.getElementById("tstatus");if(st)st.innerHTML=icon(ic2)+" "+msg;
-  document.getElementById("hint").innerHTML="<b>Drag the truck</b> through the streets to your door to speed it up!";
   highlightSteps(idx);
 }
 function arriveHome(){positionDriver();var el=document.getElementById("eta");if(el)el.textContent="";document.getElementById("tstatus").innerHTML=icon("info")+" ...huh. It seems to have wandered off.";document.getElementById("hint").innerHTML="";setTimeout(reveal,1300);}
