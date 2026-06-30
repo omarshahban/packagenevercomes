@@ -3,21 +3,24 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>PackageNeverComes,all the dopamine of shopping, none of the spending</title>
+<title>PackageNeverComes: all the dopamine of shopping, none of the spending</title>
 <meta name="description" content="A shopping simulator for the dopamine, not the spending. Browse real best-sellers, fill your cart, check out, watch your package come... and it never does. You didn't spend a penny." />
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 <link rel="apple-touch-icon" href="/og.png" />
 <meta property="og:type" content="website" />
+<meta property="og:site_name" content="PackageNeverComes" />
 <meta property="og:url" content="https://packagenevercomes.com" />
-<meta property="og:title" content="PackageNeverComes" />
-<meta property="og:description" content="All the dopamine of shopping. None of the spending." />
-<meta property="og:image" content="https://packagenevercomes.com/og.png" />
+<meta property="og:title" content="PackageNeverComes: the dopamine of shopping, none of the spending" />
+<meta property="og:description" content="Browse real best-sellers, fill your cart, check out, and watch your package come… it never does. You don't spend a penny." />
+<meta property="og:image" content="https://packagenevercomes.com/og.png?v=3" />
+<meta property="og:image:type" content="image/png" />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="PackageNeverComes" />
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="PackageNeverComes" />
-<meta name="twitter:description" content="All the dopamine of shopping. None of the spending." />
-<meta name="twitter:image" content="https://packagenevercomes.com/og.png" />
+<meta name="twitter:title" content="PackageNeverComes: the dopamine of shopping, none of the spending" />
+<meta name="twitter:description" content="Browse real best-sellers, fill your cart, check out, and watch your package come… it never does." />
+<meta name="twitter:image" content="https://packagenevercomes.com/og.png?v=3" />
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&display=swap');
   :root{
@@ -354,10 +357,10 @@
 
 <section class="wrap faq" id="faq">
   <h2>Questions you might have</h2>
-  <p class="lead">However you found us,"fake shopping site," "dopamine shopping," "buy nothing simulator",you're in the right place.</p>
-  <div class="qa"><div class="q"><span class="ic" data-icon="package"></span>Why does the package never come?</div><div class="a">That's the whole point. The reward your brain wants is the anticipation,the browsing, the cart, the checkout, the truck on its way. We give you all of that and skip the spending and the regret. The package never comes; the dopamine does.</div></div>
+  <p class="lead">However you found us, "fake shopping site," "dopamine shopping," "buy nothing simulator," you're in the right place.</p>
+  <div class="qa"><div class="q"><span class="ic" data-icon="package"></span>Why does the package never come?</div><div class="a">That's the whole point. The reward your brain wants is the anticipation: the browsing, the cart, the checkout, the truck on its way. We give you all of that and skip the spending and the regret. The package never comes; the dopamine does.</div></div>
   <div class="qa"><div class="q"><span class="ic" data-icon="lock"></span>Will I be charged? Is it safe?</div><div class="a">No and yes. Nothing is for sale, no payment is processed, and no card details are collected. The card field is pre-filled with an obviously fake number for fun. Spend as much as you like and pay exactly zero.</div></div>
-  <div class="qa"><div class="q"><span class="ic" data-icon="check"></span>Are these real products?</div><div class="a">Yes,the catalog is built from current Amazon best-sellers. Here they never ship. If a craving is real, every product has a "buy it for real" link to the actual store.</div></div>
+  <div class="qa"><div class="q"><span class="ic" data-icon="check"></span>Are these real products?</div><div class="a">Yes, the catalog is built from current Amazon best-sellers. Here they never ship. If a craving is real, every product has a "buy it for real" link to the actual store.</div></div>
 </section>
 
 <!-- Cart drawer -->
@@ -424,7 +427,7 @@
   <div class="sheet">
     <button class="sheet-x" onclick="closeReal()">&times;</button>
     <h2 class="warn-h2"><span class="ic" data-icon="warn"></span>Warning: leaving the playground</h2>
-    <p class="sub">You're about to leave the safety of the PackageNeverComes simulator and enter the <b>real store</b>,where things cost <b>real money</b> and actually arrive. Your wallet is no longer protected past this point.</p>
+    <p class="sub">You're about to leave the safety of the PackageNeverComes simulator and enter the <b>real store</b>, where things cost <b>real money</b> and actually arrive. Your wallet is no longer protected past this point.</p>
     <p class="affnote">This is a real affiliate link. If you buy something, we may earn a commission at no extra cost to you. As an Amazon Associate we earn from qualifying purchases.</p>
     <div class="mbtns stack">
       <button class="btn-safe" onclick="closeReal()">Take me back to the safety of no spending!</button>
@@ -572,7 +575,7 @@ var DESC={
   Pet:"Your pet would absolutely approve. Add to cart, keep the cash.",
   Books:"A current best-seller everyone's reading. Add it to the pile you'll never quite finish."
 };
-function descFor(p){return DESC[p.c]+" Currently a top Amazon best-seller,here it never ships, and you keep every coin.";}
+function descFor(p){return DESC[p.c]+" Currently a top Amazon best-seller. Here it never ships, and you don't spend a penny.";}
 
 var REVIEW_BANK=["Added to cart, felt amazing, closed the tab. 10/10.","The dopamine arrived even though the package didn't.","Cheaper than therapy. Did not ship. Perfect.","I 'bought' three. Saved a fortune. Slept like a baby.","Exactly as not-described. Would not-buy again.","Five stars for the rush, zero dollars for the wallet.","My favourite thing I never owned."];
 var REVIEW_NAMES=["Sam K.","A. Persaud","Jordan M.","Riya","Tunde O.","Mia L.","Devon","Priya S."];
@@ -587,10 +590,10 @@ var selectedShip="two", combine=false;
 
 var CODES={
   DOPAMINE10:{type:"pct",val:10,desc:"10% off everything you won't buy"},
-  BROKE20:{type:"pct",val:20,desc:"20% off,treat yourself to nothing"},
+  BROKE20:{type:"pct",val:20,desc:"20% off, treat yourself to nothing"},
   PAYDAY25:{type:"flat",val:25,desc:"$25 off your imaginary haul"},
   NEVERARRIVES:{type:"pct",val:50,desc:"50% off (it still never comes)"},
-  GOBIG90:{type:"pct",val:90,desc:"90% off,go wild, it's all fake"}
+  GOBIG90:{type:"pct",val:90,desc:"90% off, go wild, it's all fake"}
 };
 
 /* ---------- STATE ---------- */
@@ -618,7 +621,7 @@ function renderGrid(list){
   var items=list||PRODUCTS.filter(function(p){return activeCat==="All"||p.c===activeCat;});
   items=sortList(items);
   var g=document.getElementById("grid");
-  if(!items.length){g.innerHTML='<div class="empty">Nothing matched,but the craving is real. Try a category above.</div>';return;}
+  if(!items.length){g.innerHTML='<div class="empty">Nothing matched, but the craving is real. Try a category above.</div>';return;}
   g.innerHTML=items.map(function(p){
     return '<div class="card">'+
       '<div class="thumb" onclick="openDetail('+p.id+')"><span class="deal">-'+p.off+'%</span><img loading="lazy" src="'+IMG+p.g+'" alt="'+p.t.replace(/"/g,'')+'"></div>'+
@@ -711,7 +714,7 @@ function removeCode(){appliedCode=null;renderCart();}
 function renderCart(){
   var n=cartCount();document.getElementById("cartCount").textContent=n;var fc=document.getElementById("floatCount");if(fc)fc.textContent=n;
   var box=document.getElementById("ditems");
-  if(!cart.length){box.innerHTML='<div class="empty">Your cart is empty.<br>Go on,add something you can\'t afford.</div>';document.getElementById("dfoot").innerHTML='<button class="checkout" disabled style="opacity:.5">Proceed to checkout</button>';return;}
+  if(!cart.length){box.innerHTML='<div class="empty">Your cart is empty.<br>Go on, add something you can\'t afford.</div>';document.getElementById("dfoot").innerHTML='<button class="checkout" disabled style="opacity:.5">Proceed to checkout</button>';return;}
   box.innerHTML=cart.map(function(i){var p=byId(i.id);return '<div class="crow"><img src="'+IMG+p.g+'"><div class="ci"><div class="t">'+p.t+'</div><div style="font-weight:900;margin-top:2px">'+money(p.p)+'</div><div class="qty"><button onclick="chQty('+i.id+',-1)">&minus;</button><span>'+i.qty+'</span><button onclick="chQty('+i.id+',1)">+</button><button class="rm" onclick="chQty('+i.id+',-99)">remove</button></div></div></div>';}).join("");
   var sub=cartSubtotal(),disc=discountAmt(),total=cartFinal();
   var ship=sub>=FREE_SHIP?'<div class="shipmsg unlocked">'+icon("zap")+' You\'ve unlocked FREE 2-Minute Delivery!</div><div class="shipbar"><div style="width:100%"></div></div>':'<div class="shipmsg">'+icon("zap")+' Add <b style="color:var(--coral)">&nbsp;'+money(FREE_SHIP-sub)+'&nbsp;</b> to unlock FREE 2-Minute Delivery</div><div class="shipbar"><div style="width:'+Math.min(100,sub/FREE_SHIP*100)+'%"></div></div>';
@@ -777,7 +780,7 @@ function placeOrder(){
     document.getElementById("orderBody").classList.remove("hide");
     var on="PNC-"+Math.floor(100000+Math.random()*899999);
     document.getElementById("ordernum").textContent="Order "+on+" · "+s.label+" · arriving "+s.est;
-    document.getElementById("orderSub").textContent = selectedShip==="two"?"Hold tight,2-minute delivery incoming.":"Your dopamine is on the way.";
+    document.getElementById("orderSub").textContent = selectedShip==="two"?"Hold tight, 2-minute delivery incoming.":"Your dopamine is on the way.";
     document.getElementById("reveal").classList.remove("show");
     document.getElementById("tstatus").textContent="Confirming your order...";
     confetti(); runTracking();
@@ -803,7 +806,7 @@ function renderPacking(){
     '<g transform="translate(56,52)"><circle cx="0" cy="0" r="13" fill="#e7b48f"/><rect x="-15" y="14" width="30" height="42" rx="9" fill="#0FAE9E"/></g>'+
     '<rect x="20" y="98" width="58" height="28" rx="3" fill="#cdb6a6"/>'+boxes+'</svg>';
   document.getElementById("tstatus").innerHTML=icon("package")+" Packing your order";
-  document.getElementById("hint").innerHTML="<b>Tap each box</b> to pack it,pack all "+packNeed+" to ship faster!";
+  document.getElementById("hint").innerHTML="<b>Tap each box</b> to pack it. Pack all "+packNeed+" to ship faster!";
   highlightSteps(1);
   var gs=document.querySelectorAll("#trackmap .packbox");
   for(var j=0;j<gs.length;j++){gs[j].style.cursor="pointer";gs[j].addEventListener("click",function(){packBox(this);});}
@@ -813,7 +816,7 @@ function packBox(g){
   if(g.getAttribute("data-done"))return;
   g.setAttribute("data-done","1");g.querySelector(".packtick").style.display="";beep(700);packDone++;
   var left=packNeed-packDone;
-  if(left>0)document.getElementById("hint").innerHTML="<b>Keep tapping</b>,"+left+" box"+(left>1?"es":"")+" to go!";
+  if(left>0)document.getElementById("hint").innerHTML="<b>Keep tapping</b>, "+left+" box"+(left>1?"es":"")+" to go!";
   else{document.getElementById("hint").innerHTML="All packed! Off to the truck…";clearTimeout(stageTimer);confetti();setTimeout(nextStage,550);}
 }
 
@@ -892,7 +895,7 @@ function openReal(id){realProduct=(typeof id==="number")?byId(id):(cart[0]?byId(
 function closeReal(){document.getElementById("realModal").classList.remove("show");document.getElementById("scrim").classList.remove("dark");if(!anyOpenExcept("realModal"))document.getElementById("scrim").classList.remove("show");syncLock();}
 
 /* ---------- SHARE / SOUND / CONFETTI ---------- */
-function shareSavings(){var txt="I just \"bought\" "+moneyShort(lastOrderTotal)+" of stuff on PackageNeverComes and saved every penny. All the dopamine of shopping, none of the spending. packagenevercomes.com";if(navigator.share){navigator.share({text:txt}).catch(function(){});}else{navigator.clipboard.writeText(txt).then(function(){toast("Copied to clipboard!","check");},function(){alert(txt);});}}
+function shareSavings(){var txt="I just \"bought\" "+moneyShort(lastOrderTotal)+" of stuff on PackageNeverComes and saved every penny. All the dopamine of shopping, none of the spending. packagenevercomes.com";if(navigator.share){navigator.share({title:"PackageNeverComes",text:txt,url:"https://packagenevercomes.com"}).catch(function(){});}else{navigator.clipboard.writeText(txt+" https://packagenevercomes.com").then(function(){toast("Copied to clipboard!","check");},function(){alert(txt);});}}
 var actx;function beep(freq){try{actx=actx||new (window.AudioContext||window.webkitAudioContext)();var o=actx.createOscillator(),g=actx.createGain();o.type="sine";o.frequency.value=freq;o.connect(g);g.connect(actx.destination);g.gain.setValueAtTime(.08,actx.currentTime);g.gain.exponentialRampToValueAtTime(.0001,actx.currentTime+.18);o.start();o.stop(actx.currentTime+.18);}catch(e){}}
 function confetti(){var c=document.getElementById("confetti"),x=c.getContext("2d");c.style.display="block";c.width=innerWidth;c.height=innerHeight;var cols=["#FF6B5B","#FFC23C","#0FAE9E","#FF9F4D","#FF8FA3"];var P=[];for(var i=0;i<120;i++){P.push({x:Math.random()*c.width,y:-20-Math.random()*c.height*.3,s:4+Math.random()*6,vy:2+Math.random()*4,vx:-2+Math.random()*4,col:cols[i%cols.length],rot:Math.random()*6});}var t=0;(function loop(){x.clearRect(0,0,c.width,c.height);t++;P.forEach(function(p){p.y+=p.vy;p.x+=p.vx;p.rot+=.1;x.save();x.translate(p.x,p.y);x.rotate(p.rot);x.fillStyle=p.col;x.fillRect(-p.s/2,-p.s/2,p.s,p.s*1.6);x.restore();});if(t<130)requestAnimationFrame(loop);else c.style.display="none";})();}
 
