@@ -276,6 +276,23 @@
   .qa{background:#fff;border:1px solid var(--line);border-radius:14px;padding:13px 15px;margin-bottom:9px}
   .qa .q{font-weight:900;display:flex;align-items:center;gap:8px;font-size:15px}
   .qa .a{color:var(--muted);font-size:14px;line-height:1.55;margin-top:6px}
+  .waitlist{padding:24px 0 8px}
+  .wlcard{background:var(--card);border:1px solid var(--line);border-radius:20px;box-shadow:var(--shadow);padding:30px 28px;text-align:center;max-width:620px;margin:0 auto}
+  .wlbadge{display:inline-flex;align-items:center;gap:6px;background:var(--teal-bg);color:var(--teal);font-weight:900;font-size:12px;letter-spacing:.02em;text-transform:uppercase;padding:6px 12px;border-radius:999px;margin-bottom:14px}
+  .wlbadge .ic{font-size:14px}
+  .wlcard h2{margin:0 0 8px;font-size:24px;font-weight:900;letter-spacing:-.02em;color:var(--ink)}
+  .wlsub{margin:0 auto 20px;max-width:460px;font-size:14.5px;line-height:1.5;color:var(--muted)}
+  .wlform{display:flex;gap:9px;max-width:460px;margin:0 auto;align-items:stretch}
+  .wlform input{flex:1;min-width:0;padding:13px 16px;border:1.5px solid var(--line);border-radius:999px;font-size:15px;font-family:inherit;outline:none;color:var(--ink)}
+  .wlform input:focus{border-color:var(--coral)}
+  .wlform button{background:var(--coral);color:#fff;font-weight:900;font-size:15px;padding:13px 22px;border-radius:999px;white-space:nowrap;transition:.15s}
+  .wlform button:hover{background:var(--coral-d)}
+  .wlnote{margin:14px 0 0;font-size:12.5px;font-weight:700;color:var(--muted)}
+  .wldone{display:flex;flex-direction:column;align-items:center;gap:6px}
+  .wldone .wlcheck{display:flex;align-items:center;justify-content:center;width:46px;height:46px;border-radius:50%;background:var(--teal-bg);color:var(--teal);font-size:22px;margin-bottom:4px}
+  .wldone h3{margin:0;font-size:20px;font-weight:900;color:var(--ink)}
+  .wldone p{margin:0;font-size:14px;color:var(--muted)}
+  @media(max-width:560px){.wlform{flex-direction:column}.wlform button{padding:13px}.wlcard{padding:26px 18px}.wlcard h2{font-size:21px}}
   .tipjar{padding:4px 0 40px}
   .tipcard{background:linear-gradient(135deg,#FFF1EA,#FFE0D2);border:1px solid var(--line);border-radius:18px;padding:28px 22px;text-align:center;max-width:620px;margin:0 auto}
   .tipic{font-size:36px;color:var(--coral);display:inline-flex}
@@ -284,6 +301,8 @@
   .tipbtn{display:inline-flex;align-items:center;gap:8px;background:var(--coral);color:#fff;font-weight:900;font-size:15px;padding:13px 24px;border-radius:12px;text-decoration:none}
   .tipbtn:active{transform:scale(.98)}
   .kofi-embed{border:none;width:100%;max-width:540px;height:1120px;border-radius:12px;background:#f9f9f9;display:block;margin:4px auto 0}
+  #tipModal .sheet{max-width:580px}
+  #tipModal .kofi-embed{margin-top:8px}
   .histsum{font-weight:800;color:var(--ink);margin-bottom:12px;font-size:14px}
   .histrow{border:1px solid var(--line);border-radius:12px;padding:11px 13px;margin-bottom:9px}
   .histrow .hh{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
@@ -407,6 +426,19 @@
   <div class="qa"><div class="q"><span class="ic" data-icon="check"></span>Are these real products?</div><div class="a">Yes, the catalog is built from current Amazon best-sellers. Here they never ship. If a craving is real, every product has a "buy it for real" link to the actual store.</div></div>
 </section>
 
+<section class="wrap waitlist" id="waitlist">
+  <div class="wlcard">
+    <span class="wlbadge"><span class="ic" data-icon="package"></span>Coming soon</span>
+    <h2>Get the PackageNeverComes app, free.</h2>
+    <p class="wlsub">We're building the app: your savings tally, daily drops to browse and not buy, and the full dopamine loop in your pocket. Join the waitlist and you'll be first in line when it lands.</p>
+    <form class="wlform" id="wlForm" onsubmit="joinWaitlist(event)">
+      <input type="email" id="wlEmail" placeholder="you@example.com" autocomplete="email" required />
+      <button type="submit">Join the waitlist</button>
+    </form>
+    <p class="wlnote">No spam, no charges, just a heads up when it drops. Unsubscribe anytime.</p>
+  </div>
+</section>
+
 <section class="wrap tipjar" id="tip">
   <div class="tipcard">
     <span class="tipic" data-icon="heart"></span>
@@ -495,6 +527,15 @@
     <h2><span class="ic" data-icon="package"></span>Order history</h2>
     <p class="sub">Everything you "bought" and never paid for.</p>
     <div id="histBody"></div>
+  </div>
+</div>
+
+<div class="modal" id="tipModal">
+  <div class="sheet">
+    <button class="sheet-x" onclick="closeAll()">&times;</button>
+    <h2><span class="ic" data-icon="heart" style="color:var(--coral)"></span>Leave a tip</h2>
+    <p class="sub">This is the only place on the entire site where you can actually spend real money. A small tip keeps PackageNeverComes free, fast, and (mostly) ad-free. Completely optional, endlessly appreciated.</p>
+    <iframe class="kofi-embed" id="kofiframeModal" data-src="https://ko-fi.com/packagenevercomes/?hidefeed=true&widget=true&embed=true&preview=true" title="Tip PackageNeverComes on Ko-fi"></iframe>
   </div>
 </div>
 
@@ -845,8 +886,20 @@ function syncLock(){document.body.classList.toggle("noscroll",anyOpen());}
 function openCart(){renderCart();document.getElementById("drawer").classList.add("show");document.getElementById("scrim").classList.add("show");syncLock();}
 function closeCart(){document.getElementById("drawer").classList.remove("show");document.getElementById("scrim").classList.remove("show");syncLock();}
 function openCheckout(){if(!cart.length)return;closeCart();closeDetail();selectedShip=defaultShip(computeOpts());renderShipBlock();show("checkoutModal");}
-function closeAll(){trackRunning=false;clearInterval(procInt);clearTimeout(stageTimer);["checkoutModal","orderModal","realModal","detailModal","historyModal"].forEach(function(m){document.getElementById(m).classList.remove("show");});closeCart();var sc=document.getElementById("scrim");sc.classList.remove("show");sc.classList.remove("dark");syncLock();}
-function openTip(){var t=document.getElementById("tip");if(t)t.scrollIntoView({behavior:"smooth",block:"start"});}
+function closeAll(){trackRunning=false;clearInterval(procInt);clearTimeout(stageTimer);["checkoutModal","orderModal","realModal","detailModal","historyModal","tipModal"].forEach(function(m){document.getElementById(m).classList.remove("show");});closeCart();var sc=document.getElementById("scrim");sc.classList.remove("show");sc.classList.remove("dark");syncLock();}
+function openTip(){var f=document.getElementById("kofiframeModal");if(f&&!f.src)f.src=f.getAttribute("data-src");show("tipModal");}
+var WL_ENDPOINT="";
+function joinWaitlist(e){
+  e.preventDefault();
+  var inp=document.getElementById("wlEmail");
+  var email=(inp.value||"").trim();
+  if(!email||email.indexOf("@")<1||email.indexOf(".")<0){inp.focus();return;}
+  var list=[];try{list=JSON.parse(localStorage.getItem("pnc_waitlist")||"[]");}catch(_){}
+  if(list.indexOf(email)<0){list.push(email);try{localStorage.setItem("pnc_waitlist",JSON.stringify(list));}catch(_){}}
+  if(WL_ENDPOINT){try{fetch(WL_ENDPOINT,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({email:email})});}catch(_){}}
+  var card=document.querySelector(".wlcard");
+  if(card){card.innerHTML='<div class="wldone"><span class="wlcheck ic" data-icon="check"></span><h3>You\'re on the list.</h3><p>We\'ll email you the second the app drops. Keep browsing, keep saving.</p></div>';mountIcons();}
+}
 function fmtDate(ts){var d=new Date(ts);return d.toLocaleDateString("en-US",{month:"short",day:"numeric"})+", "+d.toLocaleTimeString("en-US",{hour:"numeric",minute:"2-digit"});}
 function openHistory(){renderHistory();show("historyModal");}
 function renderHistory(){
@@ -1055,6 +1108,7 @@ function initBackdrops(){
   document.getElementById("orderModal").addEventListener("click",function(e){if(e.target===this){if(revealed)closeAll();else toast("Tap × to skip ahead. Your savings are safe.","info");}});
   document.getElementById("realModal").addEventListener("click",function(e){if(e.target===this)closeReal();});
   document.getElementById("historyModal").addEventListener("click",function(e){if(e.target===this)closeAll();});
+  document.getElementById("tipModal").addEventListener("click",function(e){if(e.target===this)closeAll();});
   document.addEventListener("keydown",function(e){if(e.key==="Escape"){if(document.getElementById("orderModal").classList.contains("show")&&!revealed)return;closeAll();}});
 }
 
