@@ -272,6 +272,13 @@
   .qa{background:#fff;border:1px solid var(--line);border-radius:14px;padding:13px 15px;margin-bottom:9px}
   .qa .q{font-weight:900;display:flex;align-items:center;gap:8px;font-size:15px}
   .qa .a{color:var(--muted);font-size:14px;line-height:1.55;margin-top:6px}
+  .tipjar{padding:4px 0 40px}
+  .tipcard{background:linear-gradient(135deg,#FFF1EA,#FFE0D2);border:1px solid var(--line);border-radius:18px;padding:28px 22px;text-align:center;max-width:620px;margin:0 auto}
+  .tipic{font-size:36px;color:var(--coral);display:inline-flex}
+  .tipcard h2{margin:8px 0 8px;font-size:22px;letter-spacing:-.02em}
+  .tipcard p{margin:0 auto 18px;color:var(--ink);font-size:14px;line-height:1.6;max-width:470px}
+  .tipbtn{display:inline-flex;align-items:center;gap:8px;background:var(--coral);color:#fff;font-weight:900;font-size:15px;padding:13px 24px;border-radius:12px;text-decoration:none}
+  .tipbtn:active{transform:scale(.98)}
 
   .toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--ink);color:#fff;padding:11px 18px;border-radius:12px;font-weight:800;font-size:14px;z-index:95;opacity:0;transition:.25s;pointer-events:none;display:flex;align-items:center;gap:8px;max-width:90vw}
   .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
@@ -370,6 +377,15 @@
   <div class="qa"><div class="q"><span class="ic" data-icon="package"></span>Why does the package never come?</div><div class="a">That's the whole point. The reward your brain wants is the anticipation: the browsing, the cart, the checkout, the truck on its way. We give you all of that and skip the spending and the regret. The package never comes; the dopamine does.</div></div>
   <div class="qa"><div class="q"><span class="ic" data-icon="lock"></span>Will I be charged? Is it safe?</div><div class="a">No and yes. Nothing is for sale, no payment is processed, and no card details are collected. The card field is pre-filled with an obviously fake number for fun. Spend as much as you like and pay exactly zero.</div></div>
   <div class="qa"><div class="q"><span class="ic" data-icon="check"></span>Are these real products?</div><div class="a">Yes, the catalog is built from current Amazon best-sellers. Here they never ship. If a craving is real, every product has a "buy it for real" link to the actual store.</div></div>
+</section>
+
+<section class="wrap tipjar">
+  <div class="tipcard">
+    <span class="tipic" data-icon="heart"></span>
+    <h2>Enjoying the dopamine?</h2>
+    <p>This is the <b>only place on the entire site where you can actually spend real money</b>. A small tip keeps PackageNeverComes free, fast, and (mostly) ad-free. Completely optional, endlessly appreciated.</p>
+    <a class="tipbtn" id="kofiLink" href="#" target="_blank" rel="noopener"><span class="ic" data-icon="heart"></span> Leave a tip on Ko-fi</a>
+  </div>
 </section>
 
 <!-- Cart drawer -->
@@ -483,13 +499,16 @@ var ICONS={
   tag:STROKE+'<path d="M20.59 13.41 13.42 20.58a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>',
   leaf:STROKE+'<path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.52-4.48 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6"/></svg>',
   chev:STROKE+'<polyline points="9 18 15 12 9 6"/></svg>',
-  clock:STROKE+'<circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>'
+  clock:STROKE+'<circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>',
+  heart:STROKE+'<path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 1 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg>'
 };
 function icon(name){return ICONS[name]||'';}
 function mountIcons(root){(root||document).querySelectorAll('[data-icon]').forEach(function(el){el.innerHTML=icon(el.getAttribute('data-icon'));});}
 
 /* ---------- CONFIG ---------- */
 var AFFILIATE_TAG="younghummy09-20";
+// TODO: replace with your real Ko-fi page once created (e.g. https://ko-fi.com/packagenevercomes)
+var KOFI="https://ko-fi.com/YOURNAME";
 function realUrl(p){return "https://www.amazon.com/dp/"+p.a+"?tag="+AFFILIATE_TAG;}
 var FREE_SHIP=100;
 var IMG="https://images-na.ssl-images-amazon.com/images/I/";
@@ -964,6 +983,7 @@ function initBackdrops(){
 /* ---------- INIT ---------- */
 function initFloatCart(){var fc=document.getElementById("floatcart");window.addEventListener("scroll",function(){if(window.scrollY>150)fc.classList.add("show");else fc.classList.remove("show");},{passive:true});}
 try{cart=JSON.parse(localStorage.getItem("pnc_cart")||"[]").filter(function(i){return i&&byId(i.id)&&i.qty>0;});}catch(e){cart=[];}
+var _kl=document.getElementById("kofiLink");if(_kl)_kl.href=KOFI;
 mountIcons();initDriverDrag();initBackdrops();initFloatCart();renderCats();renderGrid();renderCoupons();renderCart();updateSaved();
 </script>
 </body>
