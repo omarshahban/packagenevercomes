@@ -23,7 +23,11 @@
   .wrap{width:100%;max-width:1180px;margin:0 auto;padding:0 16px}
   svg.ic{display:inline-block;vertical-align:-.18em;width:1em;height:1em;flex:none}
 
-  header{position:sticky;top:0;z-index:40;background:rgba(255,255,255,.94);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+  header{position:relative;z-index:40;background:#fff;border-bottom:1px solid var(--line)}
+  .floatcart{position:fixed;top:12px;right:12px;z-index:45;display:flex;align-items:center;justify-content:center;width:46px;height:46px;border-radius:50%;background:rgba(255,255,255,.72);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);color:var(--coral);box-shadow:0 4px 16px rgba(60,25,10,.18);opacity:0;transform:translateY(-8px) scale(.9);pointer-events:none;transition:.25s}
+  .floatcart.show{opacity:1;transform:translateY(0) scale(1);pointer-events:auto}
+  .floatcart .ic{font-size:22px;stroke-width:2.4}
+  .floatcart .count{position:absolute;top:-2px;right:-2px;background:var(--coral);color:#fff;min-width:18px;height:18px;border-radius:9px;font-size:10px;font-weight:900;display:flex;align-items:center;justify-content:center;padding:0 4px}
   .bar{display:flex;align-items:center;gap:12px;padding:11px 10px 11px 2px}
   .logo{display:flex;align-items:center;gap:7px;font-weight:900;font-size:19px;letter-spacing:-.02em;white-space:nowrap;cursor:pointer}
   .logo{padding-left:4px}
@@ -39,16 +43,16 @@
   .saved-chip span{font-size:14px}
   .saved-chip small .nb{font-weight:900;color:var(--ink)}
   .cartbtn{position:relative;display:flex;align-items:center;gap:6px;background:none;color:var(--coral);border-radius:11px;padding:6px 4px;font-weight:900;font-size:15px}
-  .cartbtn .ic{font-size:25px;stroke-width:2.4}
+  .cartbtn .ic{font-size:21px;stroke-width:2.4}
   .cartbtn .count{position:absolute;top:-4px;right:-5px;background:var(--coral);color:#fff;min-width:19px;height:19px;border-radius:10px;font-size:11px;font-weight:900;display:flex;align-items:center;justify-content:center;padding:0 5px;transition:transform .15s}
 
   .subnav{position:relative;border-top:1px solid var(--line);background:#fff}
-  .subnav .wrap{display:flex;align-items:center;gap:18px;padding:13px 16px;font-size:14px;color:var(--muted);overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+  .subnav .wrap{display:flex;align-items:center;gap:9px;padding:11px 16px;font-size:13.5px;color:var(--muted);overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
   .subnav .wrap::-webkit-scrollbar{display:none}
   .subnav:after{content:"";position:absolute;top:0;right:0;height:100%;width:40px;background:linear-gradient(90deg,rgba(255,255,255,0),#fff);pointer-events:none}
-  .subnav .loc{display:flex;align-items:center;gap:5px;color:var(--ink);font-weight:800;white-space:nowrap}
-  .subnav a{white-space:nowrap;font-weight:600;text-decoration:none;cursor:pointer}
-  .subnav a:hover{color:var(--coral)}
+  .subnav .loc{display:flex;align-items:center;gap:5px;color:var(--ink);font-weight:800;white-space:nowrap;margin-right:4px}
+  .subnav a{white-space:nowrap;font-weight:700;text-decoration:none;cursor:pointer;background:var(--bg);border:1px solid var(--line);padding:7px 13px;border-radius:999px;color:var(--ink);transition:.12s}
+  .subnav a:hover{color:#fff;background:var(--coral);border-color:var(--coral)}
   .subnav .wrap>*{flex:none}
 
   /* Hero — slim */
@@ -388,6 +392,7 @@
   </div>
 </div>
 
+<button class="floatcart" id="floatcart" onclick="openCart()" aria-label="Cart"><span class="ic" data-icon="cart"></span><span class="count" id="floatCount">0</span></button>
 <div class="toast" id="toast"></div>
 <canvas id="confetti"></canvas>
 
@@ -655,7 +660,7 @@ function applyCode(code,silent){code=(code||"").trim().toUpperCase();if(CODES[co
 function applyTyped(){applyCode(document.getElementById("promo").value);}
 function removeCode(){appliedCode=null;renderCart();}
 function renderCart(){
-  document.getElementById("cartCount").textContent=cartCount();
+  var n=cartCount();document.getElementById("cartCount").textContent=n;var fc=document.getElementById("floatCount");if(fc)fc.textContent=n;
   var box=document.getElementById("ditems");
   if(!cart.length){box.innerHTML='<div class="empty">Your cart is empty.<br>Go on — add something you can\'t afford.</div>';document.getElementById("dfoot").innerHTML='<button class="checkout" disabled style="opacity:.5">Proceed to checkout</button>';return;}
   box.innerHTML=cart.map(function(i){var p=byId(i.id);return '<div class="crow"><img src="'+IMG+p.g+'"><div class="ci"><div class="t">'+p.t+'</div><div style="font-weight:900;margin-top:2px">'+money(p.p)+'</div><div class="qty"><button onclick="chQty('+i.id+',-1)">&minus;</button><span>'+i.qty+'</span><button onclick="chQty('+i.id+',1)">+</button><button class="rm" onclick="chQty('+i.id+',-99)">remove</button></div></div></div>';}).join("");
@@ -752,7 +757,8 @@ function initBackdrops(){
 }
 
 /* ---------- INIT ---------- */
-mountIcons();initDriverDrag();initBackdrops();renderCats();renderGrid();renderCoupons();renderCart();updateSaved();
+function initFloatCart(){var fc=document.getElementById("floatcart");window.addEventListener("scroll",function(){if(window.scrollY>150)fc.classList.add("show");else fc.classList.remove("show");},{passive:true});}
+mountIcons();initDriverDrag();initBackdrops();initFloatCart();renderCats();renderGrid();renderCoupons();renderCart();updateSaved();
 </script>
 </body>
 </html>
