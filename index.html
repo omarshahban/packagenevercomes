@@ -25,9 +25,10 @@
   svg.ic{display:inline-block;vertical-align:-.18em;width:1em;height:1em;flex:none}
 
   header{position:relative;z-index:40;background:#fff;border-bottom:1px solid var(--line)}
-  .floatcart{position:fixed;top:12px;right:12px;z-index:45;display:flex;align-items:center;justify-content:center;width:46px;height:46px;border-radius:50%;background:rgba(255,255,255,.72);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);color:var(--coral);box-shadow:0 4px 16px rgba(60,25,10,.18);opacity:0;transform:translateY(-8px) scale(.9);pointer-events:none;transition:.25s}
+  .floatwrap{position:fixed;top:10px;left:0;right:0;z-index:45;max-width:1180px;margin:0 auto;padding:0 26px;display:flex;justify-content:flex-end;pointer-events:none}
+  .floatcart{position:relative;display:flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,.72);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);color:var(--coral);box-shadow:0 4px 16px rgba(60,25,10,.18);opacity:0;transform:translateY(-8px) scale(.9);pointer-events:none;transition:.25s}
   .floatcart.show{opacity:1;transform:translateY(0) scale(1);pointer-events:auto}
-  .floatcart .ic{font-size:22px;stroke-width:2.4}
+  .floatcart .ic{font-size:21px;stroke-width:2.4}
   .floatcart .count{position:absolute;top:-2px;right:-2px;background:var(--coral);color:#fff;min-width:18px;height:18px;border-radius:9px;font-size:10px;font-weight:900;display:flex;align-items:center;justify-content:center;padding:0 4px}
   .bar{display:flex;align-items:center;gap:12px;padding:11px 10px 11px 2px}
   .logo{display:flex;align-items:center;gap:7px;font-weight:900;font-size:19px;letter-spacing:-.02em;white-space:nowrap;cursor:pointer}
@@ -103,9 +104,9 @@
   .coupon .cdesc{font-size:12px;color:var(--muted);margin-top:2px;line-height:1.35}
   .coupon button{background:var(--coral);color:#fff;font-weight:900;font-size:12px;padding:8px 11px;border-radius:9px;white-space:nowrap}
 
-  .scrim{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:50;opacity:0;pointer-events:none;transition:.2s;touch-action:none}
+  .scrim{position:fixed;inset:0;background:rgba(0,0,0,.2);z-index:50;opacity:0;pointer-events:none;transition:.2s;touch-action:none}
   .scrim.show{opacity:1;pointer-events:auto}
-  .scrim.dark{background:rgba(0,0,0,.78)}
+  .scrim.dark{background:rgba(0,0,0,.8)}
   .drawer{position:fixed;top:0;right:0;height:100%;width:360px;max-width:84vw;background:#fff;z-index:60;transform:translateX(100%);transition:transform .25s;display:flex;flex-direction:column;overscroll-behavior:contain}
   .drawer.show{transform:translateX(0)}
   .dhead{padding:17px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;font-weight:900;font-size:18px}
@@ -247,6 +248,7 @@
 
   .toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--ink);color:#fff;padding:11px 18px;border-radius:12px;font-weight:800;font-size:14px;z-index:95;opacity:0;transition:.25s;pointer-events:none;display:flex;align-items:center;gap:8px;max-width:90vw}
   .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+  .toast-btn{background:var(--coral);color:#fff;font-weight:900;font-size:12px;padding:6px 11px;border-radius:8px;margin-left:6px;pointer-events:auto}
   canvas#confetti{position:fixed;inset:0;pointer-events:none;z-index:80;display:none}
   .flyimg{position:fixed;z-index:2000;pointer-events:none;object-fit:contain;background:#fff;border:1px solid var(--line);border-radius:10px;padding:4px}
 
@@ -384,19 +386,27 @@
       <div class="track">
         <div class="trackmap" id="trackmap">
           <svg id="routeSvg" viewBox="0 0 300 140" preserveAspectRatio="none">
-            <g class="mapblocks">
-              <rect x="22" y="16" width="46" height="30" rx="4"/>
-              <rect x="118" y="20" width="60" height="24" rx="4"/>
-              <rect x="212" y="14" width="40" height="34" rx="4"/>
-              <rect x="58" y="100" width="54" height="28" rx="4"/>
-              <rect x="158" y="104" width="64" height="26" rx="4"/>
-              <rect x="244" y="96" width="40" height="34" rx="4"/>
+            <g fill="#bcd9b0"><circle cx="78" cy="58" r="6"/><circle cx="232" cy="96" r="6"/><circle cx="150" cy="30" r="5"/></g>
+            <!-- warehouse (start) -->
+            <g>
+              <rect x="4" y="88" width="64" height="44" rx="2" fill="#c9b2a2"/>
+              <rect x="4" y="82" width="64" height="9" fill="#b1917e"/>
+              <rect x="13" y="104" width="18" height="28" fill="#9c7e6b"/>
+              <rect x="40" y="102" width="22" height="14" fill="#f3ece4"/>
+              <rect x="40" y="120" width="22" height="3" fill="#e3a08f"/>
             </g>
-            <path id="routeBase" d="M 18 92 C 70 92 70 34 122 40 C 168 45 176 104 224 92 C 256 84 270 52 286 60"/>
-            <path id="routeFill" d="M 18 92 C 70 92 70 34 122 40 C 168 45 176 104 224 92 C 256 84 270 52 286 60"/>
+            <!-- neighbourhood houses -->
+            <g transform="translate(104,26)"><polygon points="0,9 12,0 24,9" fill="#e3a08f"/><rect x="2" y="9" width="20" height="15" fill="#f0d9cd"/><rect x="8" y="15" width="7" height="9" fill="#c98a76"/></g>
+            <g transform="translate(176,98)"><polygon points="0,9 12,0 24,9" fill="#e3a08f"/><rect x="2" y="9" width="20" height="15" fill="#f0d9cd"/><rect x="8" y="15" width="7" height="9" fill="#c98a76"/></g>
+            <!-- destination house (end) -->
+            <g transform="translate(246,28)">
+              <polygon points="0,18 24,0 48,18" fill="#0FAE9E"/>
+              <rect x="7" y="18" width="34" height="28" fill="#bfe9e2"/>
+              <rect x="19" y="29" width="11" height="17" fill="#0FAE9E"/>
+            </g>
+            <path id="routeBase" d="M 40 110 C 82 110 82 52 122 48 C 160 44 168 100 210 90 C 244 82 252 64 270 60"/>
+            <path id="routeFill" d="M 40 110 C 82 110 82 52 122 48 C 160 44 168 100 210 90 C 244 82 252 64 270 60"/>
           </svg>
-          <span class="mapstart" id="mapStart" data-icon="package"></span>
-          <span class="maphome" id="mapHome" data-icon="home"></span>
           <span class="driver" id="driver" data-icon="truck"></span>
           <div class="eta" id="eta"></div>
         </div>
@@ -432,7 +442,7 @@
   </div>
 </div>
 
-<button class="floatcart" id="floatcart" onclick="openCart()" aria-label="Cart"><span class="ic" data-icon="cart"></span><span class="count" id="floatCount">0</span></button>
+<div class="floatwrap"><button class="floatcart" id="floatcart" onclick="openCart()" aria-label="Cart"><span class="ic" data-icon="cart"></span><span class="count" id="floatCount">0</span></button></div>
 <div class="toast" id="toast"></div>
 <canvas id="confetti"></canvas>
 
@@ -603,7 +613,8 @@ function money(n){return "$"+n.toLocaleString("en-US",{minimumFractionDigits:2,m
 function moneyShort(n){return "$"+Math.round(n).toLocaleString("en-US");}
 function starRow(r){var f=Math.round(r),s="";for(var i=0;i<5;i++)s+=icon(i<f?"star":"staro");return '<span class="row">'+s+'</span>';}
 function byId(id){return PRODUCTS.find(function(p){return p.id===id});}
-function toast(msg,ic){var t=document.getElementById("toast");t.innerHTML=(ic?icon(ic):"")+"<span>"+msg+"</span>";t.classList.add("show");clearTimeout(t._t);t._t=setTimeout(function(){t.classList.remove("show");},1900);}
+function toast(msg,ic,opts){opts=opts||{};var t=document.getElementById("toast");var btn=opts.btn?'<button class="toast-btn" onclick="'+(opts.act||'')+'">'+opts.btn+'</button>':'';t.innerHTML=(ic?icon(ic):"")+"<span>"+msg+"</span>"+btn;t.classList.add("show");clearTimeout(t._t);t._t=setTimeout(function(){t.classList.remove("show");},opts.dur||1900);}
+function viewCart(){var t=document.getElementById("toast");t.classList.remove("show");openCart();}
 function shipBadge(p){return p.s==="five"?'<span class="shipbadge next">'+icon("clock")+' 5-minute delivery</span>':'<span class="shipbadge flash">'+icon("zap")+' 2-minute delivery</span>';}
 
 /* ---------- GRID ---------- */
@@ -699,7 +710,7 @@ function cartCount(){return cart.reduce(function(s,i){return s+i.qty;},0);}
 function cartSubtotal(){return cart.reduce(function(s,i){return s+byId(i.id).p*i.qty;},0);}
 function discountAmt(){var sub=cartSubtotal();if(!appliedCode||!CODES[appliedCode])return 0;var c=CODES[appliedCode];return c.type==="pct"?sub*c.val/100:Math.min(c.val,sub);}
 function cartFinal(){return Math.max(0,cartSubtotal()-discountAmt());}
-function addToCart(id,srcEl,qty){qty=qty||1;var l=cart.find(function(i){return i.id===id;});if(l)l.qty+=qty;else cart.push({id:id,qty:qty});beep(660);renderCart();if(srcEl)flyToCart(srcEl);else bump();toast("Added to cart","cart");}
+function addToCart(id,srcEl,qty){qty=qty||1;var l=cart.find(function(i){return i.id===id;});if(l)l.qty+=qty;else cart.push({id:id,qty:qty});beep(660);renderCart();if(srcEl)flyToCart(srcEl);else bump();toast("Added to cart","cart",{dur:3000,btn:"View cart",act:"viewCart()"});}
 function buyNow(id){addToCart(id,null,1);openCheckout();}
 function chQty(id,d){var l=cart.find(function(i){return i.id===id;});if(!l)return;l.qty+=d;if(l.qty<=0||d===-99)cart=cart.filter(function(i){return i.id!==id;});renderCart();}
 function bump(){var b=document.getElementById("cartCount");b.style.transform="scale(1.4)";setTimeout(function(){b.style.transform="scale(1)";},150);}
