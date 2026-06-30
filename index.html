@@ -276,7 +276,7 @@
   .qa{background:#fff;border:1px solid var(--line);border-radius:14px;padding:13px 15px;margin-bottom:9px}
   .qa .q{font-weight:900;display:flex;align-items:center;gap:8px;font-size:15px}
   .qa .a{color:var(--muted);font-size:14px;line-height:1.55;margin-top:6px}
-  .waitlist{padding:24px 0 8px}
+  .waitlist{padding:8px 16px 44px}
   .wlcard{background:var(--card);border:1px solid var(--line);border-radius:20px;box-shadow:var(--shadow);padding:30px 28px;text-align:center;max-width:620px;margin:0 auto}
   .wlbadge{display:inline-flex;align-items:center;gap:6px;background:var(--teal-bg);color:var(--teal);font-weight:900;font-size:12px;letter-spacing:.02em;text-transform:uppercase;padding:6px 12px;border-radius:999px;margin-bottom:14px}
   .wlbadge .ic{font-size:14px}
@@ -302,8 +302,8 @@
   .tipbtn:active{transform:scale(.98)}
   .kofi-embed{border:none;width:100%;max-width:540px;height:1120px;border-radius:12px;background:#f9f9f9;display:block;margin:4px auto 0}
   #tipModal .sheet{max-width:580px;text-align:center}
-  #tipModal .tipic{font-size:36px;color:var(--coral);display:inline-flex;margin-top:4px}
-  #tipModal h2{display:block;margin:8px 0 8px;font-size:22px;letter-spacing:-.02em;padding-right:0;line-height:1.25}
+  #tipModal .tipic{font-size:26px;color:var(--coral);display:inline-flex;margin:0}
+  #tipModal h2{display:flex;align-items:center;justify-content:center;gap:9px;margin:4px 0 8px;font-size:22px;letter-spacing:-.02em;padding-right:0;line-height:1.25}
   #tipModal p{margin:0 auto 18px;color:var(--ink);font-size:14px;line-height:1.6;max-width:470px}
   #tipModal .kofi-embed{margin-top:8px}
   .histsum{font-weight:800;color:var(--ink);margin-bottom:12px;font-size:14px}
@@ -430,6 +430,15 @@
   <div class="qa"><div class="q"><span class="ic" data-icon="check"></span>Are these real products?</div><div class="a">Yes, the catalog is built from current Amazon best-sellers. Here they never ship. If a craving is real, every product has a "buy it for real" link to the actual store.</div></div>
 </section>
 
+<section class="wrap tipjar" id="tip">
+  <div class="tipcard">
+    <span class="tipic" data-icon="heart"></span>
+    <h2>Enjoying the dopamine?</h2>
+    <p>This is the <b>only place on the entire site where you can actually spend real money</b>. A small tip keeps PackageNeverComes free, fast, and (mostly) ad-free. Completely optional, endlessly appreciated.</p>
+    <iframe class="kofi-embed" id="kofiframe" src="https://ko-fi.com/packagenevercomes/?hidefeed=true&widget=true&embed=true&preview=true" title="Tip PackageNeverComes on Ko-fi" loading="lazy"></iframe>
+  </div>
+</section>
+
 <section class="wrap waitlist" id="waitlist">
   <div class="wlcard">
     <span class="wlbadge"><span class="ic" data-icon="package"></span>Coming soon</span>
@@ -441,15 +450,6 @@
       <button type="submit">Join the waitlist</button>
     </form>
     <p class="wlnote">No spam, no charges, just a heads up when it drops. Unsubscribe anytime.</p>
-  </div>
-</section>
-
-<section class="wrap tipjar" id="tip">
-  <div class="tipcard">
-    <span class="tipic" data-icon="heart"></span>
-    <h2>Enjoying the dopamine?</h2>
-    <p>This is the <b>only place on the entire site where you can actually spend real money</b>. A small tip keeps PackageNeverComes free, fast, and (mostly) ad-free. Completely optional, endlessly appreciated.</p>
-    <iframe class="kofi-embed" id="kofiframe" src="https://ko-fi.com/packagenevercomes/?hidefeed=true&widget=true&embed=true&preview=true" title="Tip PackageNeverComes on Ko-fi" loading="lazy"></iframe>
   </div>
 </section>
 
@@ -538,8 +538,7 @@
 <div class="modal" id="tipModal">
   <div class="sheet">
     <button class="sheet-x" onclick="closeAll()">&times;</button>
-    <span class="tipic" data-icon="heart"></span>
-    <h2>Enjoying the dopamine?</h2>
+    <h2><span class="tipic" data-icon="heart"></span>Enjoying the dopamine?</h2>
     <p>This is the <b>only place on the entire site where you can actually spend real money</b>. A small tip keeps PackageNeverComes free, fast, and (mostly) ad-free. Completely optional, endlessly appreciated.</p>
     <iframe class="kofi-embed" id="kofiframeModal" data-src="https://ko-fi.com/packagenevercomes/?hidefeed=true&widget=true&embed=true&preview=true" title="Tip PackageNeverComes on Ko-fi"></iframe>
   </div>
