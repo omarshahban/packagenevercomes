@@ -285,6 +285,14 @@
   .tipbtn:active{transform:scale(.98)}
   .kofi-embed{border:none;width:100%;max-width:540px;height:712px;border-radius:12px;background:#f9f9f9;display:block;margin:4px auto 0}
   #tipModal .sheet{max-width:580px}
+  .histsum{font-weight:800;color:var(--ink);margin-bottom:12px;font-size:14px}
+  .histrow{border:1px solid var(--line);border-radius:12px;padding:11px 13px;margin-bottom:9px}
+  .histrow .hh{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+  .histrow .hn{font-weight:900;font-size:13px}
+  .histrow .hsaved{font-weight:900;font-size:13px;color:var(--teal);white-space:nowrap}
+  .histrow .hmeta{font-size:11px;color:var(--muted);margin:3px 0 5px}
+  .histrow .hitems{font-size:13px;color:var(--muted);line-height:1.45}
+  footer .flinks .tiktok-link{display:inline-flex;align-items:center;font-size:18px}
 
   .toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--ink);color:#fff;padding:11px 18px;border-radius:12px;font-weight:800;font-size:14px;z-index:95;opacity:0;transition:.25s;pointer-events:none;display:flex;align-items:center;gap:8px;max-width:90vw}
   .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
@@ -306,6 +314,7 @@
   footer .legal{color:#b09a8c;font-size:12px;border-top:1px solid #4a392f;padding-top:14px;margin-top:6px}
 
   @media(max-width:600px){
+    input,select,textarea{font-size:16px!important}
     .modal{align-items:flex-start;padding:12px}
     #detailModal{padding-left:17px;padding-right:17px}
     .sheet{max-height:90vh}
@@ -334,7 +343,7 @@
     <div class="logo" onclick="goHome()"><span class="ic" data-icon="package"></span><span class="full">Package<span class="never">NeverComes</span></span></div>
     <div class="bar-sp"></div>
     <button class="donatebtn" onclick="openTip()" aria-label="Donate"><span class="ic" data-icon="heart"></span><span class="dtx">Donate</span></button>
-    <div class="saved-chip" title="Money you haven't spent"><small><b class="nb">not</b> spent</small><span id="savedChip">$0</span></div>
+    <button class="saved-chip" onclick="openHistory()" title="View your order history"><small><b class="nb">not</b> spent</small><span id="savedChip">$0</span></button>
     <button class="cartbtn" onclick="openCart()"><span class="ic" data-icon="cart"></span><span class="cart-tx">Cart</span><span class="count" id="cartCount">0</span></button>
   </div>
   <div class="subnav">
@@ -476,6 +485,15 @@
   </div>
 </div>
 
+<div class="modal" id="historyModal">
+  <div class="sheet">
+    <button class="sheet-x" onclick="closeAll()">&times;</button>
+    <h2><span class="ic" data-icon="package"></span>Order history</h2>
+    <p class="sub">Everything you "bought" and never paid for.</p>
+    <div id="histBody"></div>
+  </div>
+</div>
+
 <div class="modal" id="tipModal">
   <div class="sheet">
     <button class="sheet-x" onclick="closeAll()">&times;</button>
@@ -499,6 +517,7 @@
       <a href="/#coupons">Coupons</a>
       <a href="/#faq">FAQ</a>
       <a href="#" onclick="openTip();return false">Donate</a>
+      <a class="tiktok-link" href="https://www.tiktok.com/@omar.shahban" target="_blank" rel="noopener" aria-label="TikTok @omar.shahban"><span class="ic" data-icon="tiktok"></span></a>
     </nav>
     <div class="fcontact">Get in touch: <a href="mailto:omar@wwapps.io">omar@wwapps.io</a></div>
     <div class="legal">
@@ -532,7 +551,8 @@ var ICONS={
   leaf:STROKE+'<path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.52-4.48 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6"/></svg>',
   chev:STROKE+'<polyline points="9 18 15 12 9 6"/></svg>',
   clock:STROKE+'<circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>',
-  heart:STROKE+'<path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 1 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg>'
+  heart:STROKE+'<path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 1 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg>',
+  tiktok:FILL+'<path d="M16.6 3h-3.1v13.1a2.8 2.8 0 1 1-2.4-2.8v-3.1a5.9 5.9 0 1 0 5.5 5.9V9.6a7.7 7.7 0 0 0 4.4 1.4V7.9a4.6 4.6 0 0 1-4.4-4.9z"/></svg>'
 };
 function icon(name){return ICONS[name]||'';}
 function mountIcons(root){(root||document).querySelectorAll('[data-icon]').forEach(function(el){el.innerHTML=icon(el.getAttribute('data-icon'));});}
@@ -672,6 +692,7 @@ var CODES={
 var cart=[], activeCat="All", sortMode="featured", appliedCode=null;
 var saved=parseFloat(localStorage.getItem("pnc_saved")||"0");
 var searchLog=JSON.parse(localStorage.getItem("pnc_searches")||"[]");
+var orders=[];try{orders=JSON.parse(localStorage.getItem("pnc_orders")||"[]");}catch(e){orders=[];}
 var detailId=null, detailQtyVal=1;
 
 /* ---------- HELPERS ---------- */
@@ -829,18 +850,32 @@ function syncLock(){document.body.classList.toggle("noscroll",anyOpen());}
 function openCart(){renderCart();document.getElementById("drawer").classList.add("show");document.getElementById("scrim").classList.add("show");syncLock();}
 function closeCart(){document.getElementById("drawer").classList.remove("show");document.getElementById("scrim").classList.remove("show");syncLock();}
 function openCheckout(){if(!cart.length)return;closeCart();closeDetail();selectedShip=defaultShip(computeOpts());renderShipBlock();show("checkoutModal");}
-function closeAll(){trackRunning=false;clearInterval(procInt);clearTimeout(stageTimer);["checkoutModal","orderModal","realModal","detailModal","tipModal"].forEach(function(m){document.getElementById(m).classList.remove("show");});closeCart();var sc=document.getElementById("scrim");sc.classList.remove("show");sc.classList.remove("dark");syncLock();}
+function closeAll(){trackRunning=false;clearInterval(procInt);clearTimeout(stageTimer);["checkoutModal","orderModal","realModal","detailModal","tipModal","historyModal"].forEach(function(m){document.getElementById(m).classList.remove("show");});closeCart();var sc=document.getElementById("scrim");sc.classList.remove("show");sc.classList.remove("dark");syncLock();}
 function openTip(){var f=document.getElementById("kofiframeModal");if(f&&!f.src)f.src=f.getAttribute("data-src");show("tipModal");}
+function fmtDate(ts){var d=new Date(ts);return d.toLocaleDateString("en-US",{month:"short",day:"numeric"})+", "+d.toLocaleTimeString("en-US",{hour:"numeric",minute:"2-digit"});}
+function openHistory(){renderHistory();show("historyModal");}
+function renderHistory(){
+  var box=document.getElementById("histBody");
+  if(!orders.length){box.innerHTML='<div class="empty">No orders yet.<br>Go fill a cart and check out!</div>';return;}
+  var total=orders.reduce(function(s,o){return s+(o.saved||0);},0);
+  var html='<div class="histsum">'+orders.length+' order'+(orders.length>1?'s':'')+' · <b>'+moneyShort(total)+'</b> not spent in total</div>';
+  html+=orders.map(function(o){
+    var items=(o.items||[]).map(function(it){return it.t+(it.qty>1?' &times;'+it.qty:'');}).join(', ');
+    return '<div class="histrow"><div class="hh"><span class="hn">'+o.n+'</span><span class="hsaved">'+moneyShort(o.saved)+' saved</span></div><div class="hmeta">'+fmtDate(o.d)+(o.ship?' · '+o.ship:'')+'</div><div class="hitems">'+items+'</div></div>';
+  }).join("");
+  box.innerHTML=html;
+}
 function show(id){document.getElementById(id).classList.add("show");document.getElementById("scrim").classList.add("show");syncLock();}
 
 /* ---------- ORDER + TRACKING ---------- */
-var lastOrderTotal=0, procInt=null, revealed=false, orderTopProduct=null;
+var lastOrderTotal=0, procInt=null, revealed=false, orderTopProduct=null, orderItemsSnap=[], curOrderNo="", curShipLabel="";
 var CATSTEP={Electronics:"Charging it to 100%",Home:"Bubble-wrapping it with love",Beauty:"Mixing your potion at the Phantom counter",Toys:"Inflating the fun",Sports:"Pumping it up for the big game",Health:"Stacking the (imaginary) shelf",Pet:"Sneaking it past the warehouse cat",Books:"Printing and binding it just for you"};
 function dominantCat(){var ct={},best="Home",bn=0;cart.forEach(function(i){var c=byId(i.id).c;ct[c]=(ct[c]||0)+i.qty;if(ct[c]>bn){bn=ct[c];best=c;}});return best;}
 function placeOrder(){
   var s=null,o=computeOpts();for(var k=0;k<o.length;k++)if(o[k].key===selectedShip)s=o[k];if(!s)s=o[1];
   lastOrderTotal=cartFinal()+s.cost; TRACK_MS=s.ms; orderCat=dominantCat(); revealed=false;
   orderTopProduct=null;cart.forEach(function(i){var p=byId(i.id);if(p&&(!orderTopProduct||p.p>orderTopProduct.p))orderTopProduct=p;});
+  orderItemsSnap=cart.map(function(i){var p=byId(i.id);return {t:p.t,qty:i.qty,p:p.p};});curShipLabel=s.label;
   document.getElementById("checkoutModal").classList.remove("show");
   document.getElementById("orderBody").classList.add("hide");
   document.getElementById("procView").classList.add("show");
@@ -854,7 +889,7 @@ function placeOrder(){
     if(!document.getElementById("orderModal").classList.contains("show"))return;
     document.getElementById("procView").classList.remove("show");
     document.getElementById("orderBody").classList.remove("hide");
-    var on="PNC-"+Math.floor(100000+Math.random()*899999);
+    var on="PNC-"+Math.floor(100000+Math.random()*899999);curOrderNo=on;
     document.getElementById("orderSub").textContent="Order "+on;
     var scol=selectedShip==="two"?"var(--coral)":"var(--teal)";
     document.getElementById("ordernum").innerHTML='<span style="color:'+scol+'">'+icon(s.ic)+'</span> '+s.label;
@@ -990,7 +1025,9 @@ function initDriverDrag(){
   window.addEventListener("pointerup",function(){if(!dragging)return;dragging=false;if(!moved&&stageIdx===2)nudge(0.06);});
   window.addEventListener("resize",function(){if(stageIdx===2&&document.getElementById("orderModal").classList.contains("show"))positionDriver();});
 }
-function reveal(){if(revealed)return;revealed=true;saved+=lastOrderTotal;localStorage.setItem("pnc_saved",String(saved));updateSaved();document.getElementById("revealAmt").textContent=moneyShort(lastOrderTotal);document.getElementById("reveal").classList.add("show");document.getElementById("orderBody").classList.remove("hide");document.getElementById("procView").classList.remove("show");document.getElementById("tstatus").textContent="";beep(523);confetti();cart=[];appliedCode=null;renderCart();}
+function reveal(){if(revealed)return;revealed=true;saved+=lastOrderTotal;localStorage.setItem("pnc_saved",String(saved));
+  orders.unshift({n:curOrderNo,d:Date.now(),saved:lastOrderTotal,ship:curShipLabel,items:orderItemsSnap});if(orders.length>60)orders.length=60;try{localStorage.setItem("pnc_orders",JSON.stringify(orders));}catch(e){}
+  updateSaved();document.getElementById("revealAmt").textContent=moneyShort(lastOrderTotal);document.getElementById("reveal").classList.add("show");document.getElementById("orderBody").classList.remove("hide");document.getElementById("procView").classList.remove("show");document.getElementById("tstatus").textContent="";beep(523);confetti();cart=[];appliedCode=null;renderCart();}
 function orderX(){if(revealed)closeAll();else skipToReveal();}
 function skipToReveal(){clearTimeout(stageTimer);clearInterval(procInt);trackRunning=false;arrived=true;reveal();}
 
@@ -1021,6 +1058,7 @@ function initBackdrops(){
   document.getElementById("orderModal").addEventListener("click",function(e){if(e.target===this){if(revealed)closeAll();else toast("Tap × to skip ahead. Your savings are safe.","info");}});
   document.getElementById("realModal").addEventListener("click",function(e){if(e.target===this)closeReal();});
   document.getElementById("tipModal").addEventListener("click",function(e){if(e.target===this)closeAll();});
+  document.getElementById("historyModal").addEventListener("click",function(e){if(e.target===this)closeAll();});
   document.addEventListener("keydown",function(e){if(e.key==="Escape"){if(document.getElementById("orderModal").classList.contains("show")&&!revealed)return;closeAll();}});
 }
 
