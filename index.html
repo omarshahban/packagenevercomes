@@ -569,7 +569,8 @@ var RAW=[
 ];
 var PRODUCTS=RAW.map(function(x,i){
   var p={id:i+1,a:x[0],t:x[1],g:x[2],p:x[3]||19.99,r:x[4]||4.5,c:x[5]};
-  p.rc=((p.id*977)%1900)+118; p.list=Math.round(p.p*1.27*100)/100; p.off=Math.round((1-p.p/p.list)*100);
+  p.rc=((p.id*977)%1900)+118;
+  if(Math.random()<0.12){var offs=[10,15,20,25,30,35,40,50];p.off=offs[Math.floor(Math.random()*offs.length)];p.list=Math.round(p.p/(1-p.off/100)*100)/100;}else{p.off=0;p.list=0;}
   p.s = (p.id%4===0) ? "five" : "two"; // most 2-minute, every 4th 5-minute
   p.fk=Math.random(); // featured shuffle key (re-randomised every page load)
   return p;
@@ -636,12 +637,12 @@ function renderGrid(list){
   if(!items.length){g.innerHTML='<div class="empty">Nothing matched, but the craving is real. Try a category above.</div>';return;}
   g.innerHTML=items.map(function(p){
     return '<div class="card">'+
-      '<div class="thumb" onclick="openDetail('+p.id+')"><span class="deal">-'+p.off+'%</span><img loading="lazy" src="'+IMG+p.g+'" alt="'+p.t.replace(/"/g,'')+'"></div>'+
+      '<div class="thumb" onclick="openDetail('+p.id+')">'+(p.off?'<span class="deal">-'+p.off+'%</span>':'')+'<img loading="lazy" src="'+IMG+p.g+'" alt="'+p.t.replace(/"/g,'')+'"></div>'+
       '<div class="cbody">'+
         shipBadge(p)+
         '<div class="ctitle" onclick="openDetail('+p.id+')">'+p.t+'</div>'+
         '<div class="stars">'+starRow(p.r)+'<b>'+p.r.toFixed(1)+'</b><span>('+p.rc.toLocaleString("en-US")+')</span></div>'+
-        '<div class="price">'+money(p.p)+'<small>'+money(p.list)+'</small></div>'+
+        '<div class="price">'+money(p.p)+(p.off?'<small>'+money(p.list)+'</small>':'')+'</div>'+
         '<div class="btns">'+
           '<button class="add" onclick="addToCart('+p.id+',this)">'+icon("cart")+' Add to cart</button>'+
           '<button class="buynow" onclick="buyNow('+p.id+')">Buy now</button>'+
@@ -670,7 +671,7 @@ function renderDetail(){
       shipBadge(p)+
       '<h3>'+p.t+'</h3>'+
       '<div class="stars">'+starRow(p.r)+'<b>'+p.r.toFixed(1)+'</b><span>('+p.rc.toLocaleString("en-US")+')</span></div>'+
-      '<div class="price" style="margin-top:6px">'+money(p.p)+'<small>'+money(p.list)+'</small> <span style="color:var(--coral);font-size:13px">-'+p.off+'%</span></div>'+
+      '<div class="price" style="margin-top:6px">'+money(p.p)+(p.off?'<small>'+money(p.list)+'</small> <span style="color:var(--coral);font-size:13px">-'+p.off+'%</span>':'')+'</div>'+
       '<div class="qtypick"><span style="font-weight:800;font-size:13px;color:var(--muted)">Qty</span><button class="b" onclick="detailQty(-1)">&minus;</button><span class="v" id="detailQtyV">1</span><button class="b" onclick="detailQty(1)">+</button></div>'+
       '<div class="btns">'+
         '<button class="add" onclick="addFromDetail()">'+icon("cart")+' Add to cart</button>'+
