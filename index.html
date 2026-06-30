@@ -24,7 +24,7 @@
   svg.ic{display:inline-block;vertical-align:-.18em;width:1em;height:1em;flex:none}
 
   header{position:sticky;top:0;z-index:40;background:rgba(255,255,255,.94);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
-  .bar{display:flex;align-items:center;gap:12px;padding:11px 4px}
+  .bar{display:flex;align-items:center;gap:12px;padding:11px 10px 11px 2px}
   .logo{display:flex;align-items:center;gap:7px;font-weight:900;font-size:19px;letter-spacing:-.02em;white-space:nowrap;cursor:pointer}
   .logo{padding-left:4px}
   .logo .ic{font-size:23px;color:var(--coral)}
@@ -37,8 +37,10 @@
   .saved-chip{display:flex;flex-direction:column;align-items:flex-end;line-height:1.05;background:var(--teal-bg);color:var(--teal);padding:5px 10px;border-radius:10px;font-weight:900;white-space:nowrap}
   .saved-chip small{font-size:9px;font-weight:700;opacity:.85;text-transform:uppercase;letter-spacing:.03em}
   .saved-chip span{font-size:14px}
-  .cartbtn{position:relative;display:flex;align-items:center;gap:6px;background:var(--ink);color:#fff;border-radius:11px;padding:9px 13px;font-weight:700;font-size:14px}
-  .cartbtn .count{position:absolute;top:-7px;right:-7px;background:var(--gold);color:#3a2600;min-width:20px;height:20px;border-radius:10px;font-size:11px;font-weight:900;display:flex;align-items:center;justify-content:center;padding:0 5px;transition:transform .15s}
+  .saved-chip small .nb{font-weight:900;color:var(--ink)}
+  .cartbtn{position:relative;display:flex;align-items:center;gap:6px;background:none;color:var(--coral);border-radius:11px;padding:6px 4px;font-weight:900;font-size:15px}
+  .cartbtn .ic{font-size:25px;stroke-width:2.4}
+  .cartbtn .count{position:absolute;top:-4px;right:-5px;background:var(--coral);color:#fff;min-width:19px;height:19px;border-radius:10px;font-size:11px;font-weight:900;display:flex;align-items:center;justify-content:center;padding:0 5px;transition:transform .15s}
 
   .subnav{position:relative;border-top:1px solid var(--line);background:#fff}
   .subnav .wrap{display:flex;align-items:center;gap:18px;padding:13px 16px;font-size:14px;color:var(--muted);overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
@@ -48,7 +50,6 @@
   .subnav a{white-space:nowrap;font-weight:600;text-decoration:none;cursor:pointer}
   .subnav a:hover{color:var(--coral)}
   .subnav .wrap>*{flex:none}
-  .subnav .chev{position:absolute;right:8px;top:50%;transform:translateY(-50%);color:var(--coral);font-size:18px;z-index:3;pointer-events:none;display:flex}
 
   /* Hero — slim */
   .hero{background:linear-gradient(125deg,#E14328,#F47B2E);color:#fff;border-radius:var(--radius);margin:14px 0;padding:14px 18px}
@@ -133,7 +134,7 @@
 
   .modal{position:fixed;z-index:70;inset:0;display:flex;align-items:center;justify-content:center;padding:16px;opacity:0;pointer-events:none;transition:.2s}
   .modal.show{opacity:1;pointer-events:auto}
-  .sheet{position:relative;background:#fff;border-radius:20px;max-width:440px;width:100%;padding:24px;box-shadow:0 20px 60px rgba(60,25,10,.3);max-height:92vh;overflow:auto}
+  .sheet{position:relative;background:#fff;border-radius:20px;max-width:440px;width:100%;padding:24px;box-shadow:0 20px 60px rgba(60,25,10,.3);max-height:88vh;overflow:auto;-webkit-overflow-scrolling:touch}
   .sheet.detail{max-width:760px;padding:0}
   .sheet-x{position:absolute;top:12px;right:12px;background:var(--line);border-radius:50%;width:30px;height:30px;font-size:18px;color:var(--ink);line-height:1;z-index:5}
   .sheet h2{margin:0 6px 4px 0;font-size:21px;letter-spacing:-.02em;display:flex;align-items:center;gap:9px;padding-right:28px}
@@ -163,7 +164,7 @@
   .detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:0}
   .detail-media{padding:22px;background:#fff;border-radius:20px 0 0 20px;display:flex;align-items:center;justify-content:center}
   .detail-media img{max-width:100%;max-height:210px;object-fit:contain}
-  .detail-info{padding:22px;overflow:auto}
+  .detail-info{padding:22px;overflow:visible}
   .detail-info h3{margin:2px 0 6px;font-size:20px;line-height:1.25;letter-spacing:-.01em}
   .detail-info .desc{color:var(--ink);font-size:14px;line-height:1.55;margin:10px 0 14px}
   .qtypick{display:flex;align-items:center;gap:12px;margin:12px 0}
@@ -227,6 +228,8 @@
   footer .legal{color:#b09a8c;font-size:12px;border-top:1px solid #4a392f;padding-top:14px;margin-top:6px}
 
   @media(max-width:600px){
+    .modal{align-items:flex-start;padding:12px}
+    .sheet{max-height:90vh}
     .bar{gap:8px}
     .logo{font-size:16px} .logo .ic{font-size:20px}
     .cart-tx{display:none}
@@ -250,7 +253,7 @@
   <div class="wrap bar">
     <div class="logo" onclick="goHome()"><span class="ic" data-icon="package"></span><span class="full">Package<span class="never">NeverComes</span></span></div>
     <div class="bar-sp"></div>
-    <div class="saved-chip" title="Money you haven't spent"><small>not spent</small><span id="savedChip">$0</span></div>
+    <div class="saved-chip" title="Money you haven't spent"><small><b class="nb">not</b> spent</small><span id="savedChip">$0</span></div>
     <button class="cartbtn" onclick="openCart()"><span class="ic" data-icon="cart"></span><span class="cart-tx">Cart</span><span class="count" id="cartCount">0</span></button>
   </div>
   <div class="subnav">
@@ -267,7 +270,6 @@
       <a href="#coupons">Coupons</a>
       <a href="#faq">Help</a>
     </div>
-    <span class="chev" data-icon="chev"></span>
   </div>
 </header>
 
@@ -422,7 +424,8 @@ var ICONS={
   sort:STROKE+'<line x1="4" y1="6" x2="20" y2="6"/><line x1="6" y1="12" x2="18" y2="12"/><line x1="9" y1="18" x2="15" y2="18"/></svg>',
   tag:STROKE+'<path d="M20.59 13.41 13.42 20.58a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>',
   leaf:STROKE+'<path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.52-4.48 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6"/></svg>',
-  chev:STROKE+'<polyline points="9 18 15 12 9 6"/></svg>'
+  chev:STROKE+'<polyline points="9 18 15 12 9 6"/></svg>',
+  clock:STROKE+'<circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>'
 };
 function icon(name){return ICONS[name]||'';}
 function mountIcons(root){(root||document).querySelectorAll('[data-icon]').forEach(function(el){el.innerHTML=icon(el.getAttribute('data-icon'));});}
@@ -508,7 +511,7 @@ var RAW=[
 var PRODUCTS=RAW.map(function(x,i){
   var p={id:i+1,a:x[0],t:x[1],g:x[2],p:x[3]||19.99,r:x[4]||4.5,c:x[5]};
   p.rc=((p.id*977)%1900)+118; p.list=Math.round(p.p*1.27*100)/100; p.off=Math.round((1-p.p/p.list)*100);
-  p.s = p.p<30 ? "flash" : "next"; // fastest available speed
+  p.s = (p.id%4===0) ? "five" : "two"; // most 2-minute, every 4th 5-minute
   return p;
 });
 var CATS=["All","Electronics","Home","Beauty","Toys","Sports","Health","Pet","Books"];
@@ -531,11 +534,10 @@ function reviewsFor(p){var o=[];for(var i=0;i<3;i++){o.push({name:REVIEW_NAMES[(
 
 /* ---------- SHIPPING ---------- */
 var SHIP={
-  flash:{label:"2-Minute Delivery",ic:"zap",cost:9.99,ms:15000,est:"in 2 minutes",cls:"flash"},
-  next:{label:"Next-Day Delivery",ic:"truck",cost:0,ms:45000,est:"by tomorrow",cls:"next"},
-  standard:{label:"Standard Shipping",ic:"package",cost:0,ms:120000,est:"eventually",cls:"standard"}
+  two:{label:"2-Minute Delivery",ic:"zap",cost:4.99,ms:120000,est:"in 2 minutes",cls:"flash"},
+  five:{label:"5-Minute Delivery",ic:"clock",cost:0,ms:300000,est:"in 5 minutes",cls:"next"}
 };
-var selectedShip="standard", combine=false;
+var selectedShip="two", combine=false;
 
 var CODES={
   DOPAMINE10:{type:"pct",val:10,desc:"10% off everything you won't buy"},
@@ -557,7 +559,7 @@ function moneyShort(n){return "$"+Math.round(n).toLocaleString("en-US");}
 function starRow(r){var f=Math.round(r),s="";for(var i=0;i<5;i++)s+=icon(i<f?"star":"staro");return '<span class="row">'+s+'</span>';}
 function byId(id){return PRODUCTS.find(function(p){return p.id===id});}
 function toast(msg,ic){var t=document.getElementById("toast");t.innerHTML=(ic?icon(ic):"")+"<span>"+msg+"</span>";t.classList.add("show");clearTimeout(t._t);t._t=setTimeout(function(){t.classList.remove("show");},1900);}
-function shipBadge(p){return p.s==="flash"?'<span class="shipbadge flash">'+icon("zap")+' 2-minute delivery</span>':'<span class="shipbadge next">'+icon("truck")+' Next-day delivery</span>';}
+function shipBadge(p){return p.s==="five"?'<span class="shipbadge next">'+icon("clock")+' 5-minute delivery</span>':'<span class="shipbadge flash">'+icon("zap")+' 2-minute delivery</span>';}
 
 /* ---------- GRID ---------- */
 function renderCats(){document.getElementById("cats").innerHTML=CATS.map(function(c){return '<button class="'+(c===activeCat?"active":"")+'" onclick="setCat(\''+c+'\')">'+c+'</button>';}).join("");}
@@ -670,7 +672,7 @@ function doSearch(e){e.preventDefault();var q=document.getElementById("q").value
 
 /* ---------- CHECKOUT SHIPPING BLOCK ---------- */
 function renderShipBlock(){
-  var opts=["flash","next","standard"].map(function(k){var s=SHIP[k];return '<div class="shipopt '+s.cls+(selectedShip===k?" sel":"")+'" onclick="selectShip(\''+k+'\')"><span class="so-ic">'+icon(s.ic)+'</span><div class="so-main"><div class="so-t">'+s.label+'</div><div class="so-sub">Arrives '+s.est+'</div></div><div class="so-price">'+(s.cost?money(s.cost):"FREE")+'</div></div>';}).join("");
+  var opts=["two","five"].map(function(k){var s=SHIP[k];return '<div class="shipopt '+s.cls+(selectedShip===k?" sel":"")+'" onclick="selectShip(\''+k+'\')"><span class="so-ic">'+icon(s.ic)+'</span><div class="so-main"><div class="so-t">'+s.label+'</div><div class="so-sub">Arrives '+s.est+'</div></div><div class="so-price">'+(s.cost?money(s.cost):"FREE")+'</div></div>';}).join("");
   var box='<div class="combine" onclick="toggleCombine(event)"><input type="checkbox" id="combineChk" '+(combine?"checked":"")+' onclick="event.stopPropagation();toggleCombine(event)"><span class="ic" data-icon="leaf"></span><span>'+(combine?"Boxes reduced from 0 to 0. The planet thanks you.":"Combine into fewer boxes (better for the planet).")+'</span></div>';
   document.getElementById("shipBlock").innerHTML='<div class="shipopts">'+opts+'</div>'+box;
   mountIcons(document.getElementById("shipBlock"));
@@ -696,7 +698,7 @@ function placeOrder(){
   document.getElementById("checkoutModal").classList.remove("show");
   var on="PNC-"+Math.floor(100000+Math.random()*899999);
   document.getElementById("ordernum").textContent="Order "+on+" · "+s.label+" · arriving "+s.est;
-  document.getElementById("orderSub").textContent = selectedShip==="flash"?"Hold tight — 2-minute delivery incoming.":"Your dopamine is on the way.";
+  document.getElementById("orderSub").textContent = selectedShip==="two"?"Hold tight — 2-minute delivery incoming.":"Your dopamine is on the way.";
   document.getElementById("reveal").classList.remove("show");
   document.getElementById("tstatus").textContent="Confirming your order...";
   show("orderModal");beep(880);confetti();runTracking();
