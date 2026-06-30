@@ -162,8 +162,8 @@
   .sheet{position:relative;background:#fff;border-radius:20px;max-width:440px;width:100%;padding:24px;box-shadow:0 20px 60px rgba(60,25,10,.3);max-height:88vh;overflow:auto;-webkit-overflow-scrolling:touch;touch-action:pan-y;overscroll-behavior:contain}
   .sheet.detail{max-width:760px;padding:0}
   .sheet-x{position:absolute;top:12px;right:12px;background:var(--line);border-radius:50%;width:30px;height:30px;font-size:18px;color:var(--ink);line-height:1;z-index:5}
-  .sheet h2{margin:0 6px 4px 0;font-size:21px;letter-spacing:-.02em;display:flex;align-items:center;gap:9px;padding-right:28px}
-  .sheet p.sub{margin:0 0 16px;color:var(--muted);font-size:14px}
+  .sheet h2{margin:0 6px 12px 0;font-size:21px;letter-spacing:-.02em;display:flex;align-items:center;gap:9px;padding-right:28px;line-height:1.25}
+  .sheet p.sub{margin:0 0 16px;color:var(--muted);font-size:14px;line-height:1.55}
   .field{margin-bottom:11px}
   .field label{display:block;font-size:12px;font-weight:700;color:var(--muted);margin-bottom:4px;text-transform:uppercase;letter-spacing:.03em}
   .field input{width:100%;padding:11px 12px;border:1.5px solid var(--line);border-radius:10px;font-size:15px;background:#FFFBF8}
@@ -432,7 +432,7 @@
   <div class="sheet">
     <button class="sheet-x" onclick="closeReal()">&times;</button>
     <h2 class="warn-h2"><span class="ic" data-icon="warn"></span>Warning: leaving the playground</h2>
-    <p class="sub">You're about to leave the safety of the PackageNeverComes simulator and enter the <b>real store</b>, where things cost <b>real money</b> and actually arrive. Your wallet is no longer protected past this point.</p>
+    <p class="sub">You're leaving the simulator for the <b>real store</b>, where things cost <b>real money</b> and actually arrive.</p>
     <p class="affnote">This is a real affiliate link. If you buy something, we may earn a commission at no extra cost to you. As an Amazon Associate we earn from qualifying purchases.</p>
     <div class="mbtns stack">
       <button class="btn-safe" onclick="closeReal()">Take me back to the safety of no spending!</button>
