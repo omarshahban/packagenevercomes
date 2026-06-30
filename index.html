@@ -436,6 +436,7 @@
     <h2>Get the PackageNeverComes app, free.</h2>
     <p class="wlsub">We're building the app: your savings tally, daily drops to browse and not buy, and the full dopamine loop in your pocket. Join the waitlist and you'll be first in line when it lands.</p>
     <form class="wlform" id="wlForm" onsubmit="joinWaitlist(event)">
+      <input type="text" id="wlGotcha" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0;pointer-events:none" />
       <input type="email" id="wlEmail" placeholder="you@example.com" autocomplete="email" required />
       <button type="submit">Join the waitlist</button>
     </form>
@@ -896,12 +897,14 @@ function openTip(){var f=document.getElementById("kofiframeModal");if(f&&!f.src)
 var WL_ENDPOINT="https://formspree.io/f/xaqgdkep";
 function joinWaitlist(e){
   e.preventDefault();
+  var got=document.getElementById("wlGotcha");
+  if(got&&got.value){var c=document.querySelector(".wlcard");if(c)c.innerHTML='<div class="wldone"><span class="wlcheck ic" data-icon="check"></span><h3>You\'re on the list.</h3><p>We\'ll email you the second the app drops.</p></div>';mountIcons();return;}
   var inp=document.getElementById("wlEmail");
   var email=(inp.value||"").trim();
   if(!email||email.indexOf("@")<1||email.indexOf(".")<0){inp.focus();return;}
   var list=[];try{list=JSON.parse(localStorage.getItem("pnc_waitlist")||"[]");}catch(_){}
   if(list.indexOf(email)<0){list.push(email);try{localStorage.setItem("pnc_waitlist",JSON.stringify(list));}catch(_){}}
-  if(WL_ENDPOINT){try{fetch(WL_ENDPOINT,{method:"POST",headers:{"Content-Type":"application/json","Accept":"application/json"},body:JSON.stringify({email:email,source:"packagenevercomes waitlist"})});}catch(_){}}
+  if(WL_ENDPOINT){try{fetch(WL_ENDPOINT,{method:"POST",headers:{"Content-Type":"application/json","Accept":"application/json"},body:JSON.stringify({email:email,_gotcha:(got?got.value:""),source:"packagenevercomes waitlist"})});}catch(_){}}
   var card=document.querySelector(".wlcard");
   if(card){card.innerHTML='<div class="wldone"><span class="wlcheck ic" data-icon="check"></span><h3>You\'re on the list.</h3><p>We\'ll email you the second the app drops. Keep browsing, keep saving.</p></div>';mountIcons();}
 }
