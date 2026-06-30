@@ -815,12 +815,13 @@ function openTip(){var f=document.getElementById("kofiframeModal");if(f&&!f.src)
 function show(id){document.getElementById(id).classList.add("show");document.getElementById("scrim").classList.add("show");syncLock();}
 
 /* ---------- ORDER + TRACKING ---------- */
-var lastOrderTotal=0, procInt=null, revealed=false;
+var lastOrderTotal=0, procInt=null, revealed=false, orderTopProduct=null;
 var CATSTEP={Electronics:"Charging it to 100%",Home:"Bubble-wrapping it with love",Beauty:"Mixing your potion at the Phantom counter",Toys:"Inflating the fun",Sports:"Pumping it up for the big game",Health:"Stacking the (imaginary) shelf",Pet:"Sneaking it past the warehouse cat",Books:"Printing and binding it just for you"};
 function dominantCat(){var ct={},best="Home",bn=0;cart.forEach(function(i){var c=byId(i.id).c;ct[c]=(ct[c]||0)+i.qty;if(ct[c]>bn){bn=ct[c];best=c;}});return best;}
 function placeOrder(){
   var s=null,o=computeOpts();for(var k=0;k<o.length;k++)if(o[k].key===selectedShip)s=o[k];if(!s)s=o[1];
   lastOrderTotal=cartFinal()+s.cost; TRACK_MS=s.ms; orderCat=dominantCat(); revealed=false;
+  orderTopProduct=null;cart.forEach(function(i){var p=byId(i.id);if(p&&(!orderTopProduct||p.p>orderTopProduct.p))orderTopProduct=p;});
   document.getElementById("checkoutModal").classList.remove("show");
   document.getElementById("orderBody").classList.add("hide");
   document.getElementById("procView").classList.add("show");
@@ -967,7 +968,7 @@ function skipToReveal(){clearTimeout(stageTimer);clearInterval(procInt);trackRun
 
 /* ---------- REAL SHOP ---------- */
 var realProduct=null;
-function openReal(id){realProduct=(typeof id==="number")?byId(id):(cart[0]?byId(cart[0].id):PRODUCTS[0]);document.getElementById("realLink").href=realProduct?realUrl(realProduct):"https://www.amazon.com/?tag="+AFFILIATE_TAG;show("realModal");document.getElementById("scrim").classList.add("dark");}
+function openReal(id){realProduct=(typeof id==="number")?byId(id):(orderTopProduct||(cart[0]?byId(cart[0].id):PRODUCTS[0]));document.getElementById("realLink").href=realProduct?realUrl(realProduct):"https://www.amazon.com/?tag="+AFFILIATE_TAG;show("realModal");document.getElementById("scrim").classList.add("dark");}
 function closeReal(){document.getElementById("realModal").classList.remove("show");document.getElementById("scrim").classList.remove("dark");if(!anyOpenExcept("realModal"))document.getElementById("scrim").classList.remove("show");syncLock();}
 
 /* ---------- SHARE / SOUND / CONFETTI ---------- */
