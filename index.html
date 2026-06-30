@@ -710,7 +710,7 @@ function cartCount(){return cart.reduce(function(s,i){return s+i.qty;},0);}
 function cartSubtotal(){return cart.reduce(function(s,i){return s+byId(i.id).p*i.qty;},0);}
 function discountAmt(){var sub=cartSubtotal();if(!appliedCode||!CODES[appliedCode])return 0;var c=CODES[appliedCode];return c.type==="pct"?sub*c.val/100:Math.min(c.val,sub);}
 function cartFinal(){return Math.max(0,cartSubtotal()-discountAmt());}
-function addToCart(id,srcEl,qty){qty=qty||1;var l=cart.find(function(i){return i.id===id;});if(l)l.qty+=qty;else cart.push({id:id,qty:qty});beep(660);renderCart();if(srcEl)flyToCart(srcEl);else bump();toast("Added to cart","cart",{dur:3000,btn:"View cart",act:"viewCart()"});}
+function addToCart(id,srcEl,qty){qty=qty||1;var l=cart.find(function(i){return i.id===id;});if(l)l.qty+=qty;else cart.push({id:id,qty:qty});beep(660);renderCart();if(srcEl)flyToCart(srcEl);else bump();toast("Added to cart","cart",{dur:7000,btn:"View cart",act:"viewCart()"});}
 function buyNow(id){addToCart(id,null,1);openCheckout();}
 function chQty(id,d){var l=cart.find(function(i){return i.id===id;});if(!l)return;l.qty+=d;if(l.qty<=0||d===-99)cart=cart.filter(function(i){return i.id!==id;});renderCart();}
 function bump(){var b=document.getElementById("cartCount");b.style.transform="scale(1.4)";setTimeout(function(){b.style.transform="scale(1)";},150);}
