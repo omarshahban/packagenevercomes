@@ -892,7 +892,7 @@ function closeCart(){document.getElementById("drawer").classList.remove("show");
 function openCheckout(){if(!cart.length)return;closeCart();closeDetail();selectedShip=defaultShip(computeOpts());renderShipBlock();show("checkoutModal");}
 function closeAll(){trackRunning=false;clearInterval(procInt);clearTimeout(stageTimer);["checkoutModal","orderModal","realModal","detailModal","historyModal","tipModal"].forEach(function(m){document.getElementById(m).classList.remove("show");});closeCart();var sc=document.getElementById("scrim");sc.classList.remove("show");sc.classList.remove("dark");syncLock();}
 function openTip(){var f=document.getElementById("kofiframeModal");if(f&&!f.src)f.src=f.getAttribute("data-src");show("tipModal");}
-var WL_ENDPOINT="";
+var WL_ENDPOINT="https://formspree.io/f/xaqgdkep";
 function joinWaitlist(e){
   e.preventDefault();
   var inp=document.getElementById("wlEmail");
@@ -900,7 +900,7 @@ function joinWaitlist(e){
   if(!email||email.indexOf("@")<1||email.indexOf(".")<0){inp.focus();return;}
   var list=[];try{list=JSON.parse(localStorage.getItem("pnc_waitlist")||"[]");}catch(_){}
   if(list.indexOf(email)<0){list.push(email);try{localStorage.setItem("pnc_waitlist",JSON.stringify(list));}catch(_){}}
-  if(WL_ENDPOINT){try{fetch(WL_ENDPOINT,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({email:email})});}catch(_){}}
+  if(WL_ENDPOINT){try{fetch(WL_ENDPOINT,{method:"POST",headers:{"Content-Type":"application/json","Accept":"application/json"},body:JSON.stringify({email:email,source:"packagenevercomes waitlist"})});}catch(_){}}
   var card=document.querySelector(".wlcard");
   if(card){card.innerHTML='<div class="wldone"><span class="wlcheck ic" data-icon="check"></span><h3>You\'re on the list.</h3><p>We\'ll email you the second the app drops. Keep browsing, keep saving.</p></div>';mountIcons();}
 }
