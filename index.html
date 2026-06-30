@@ -316,8 +316,9 @@
   .histrow .hcaret{color:var(--coral);font-weight:700;margin-left:4px}
   .hdetail{display:none;margin-top:8px;border-top:1px dashed var(--line);padding-top:8px}
   .hdetail.open{display:block}
-  .hitem{display:flex;justify-content:space-between;gap:10px;align-items:center;font-size:13px;color:var(--muted);padding:4px 0}
-  .hitem a{color:var(--coral);white-space:nowrap;font-weight:700;font-size:12px;text-decoration:none}
+  .hitem{display:flex;gap:10px;align-items:center;font-size:13px;color:var(--muted);padding:4px 0}
+  .hitem span{flex:1;min-width:0}
+  .hitem a{margin-left:auto;flex:none;text-align:right;color:var(--coral);white-space:nowrap;font-weight:700;font-size:12px;text-decoration:none}
   footer .flinks .tiktok-link{display:inline-flex;align-items:center;font-size:18px}
 
   .toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--ink);color:#fff;padding:11px 18px;border-radius:12px;font-weight:800;font-size:14px;z-index:95;opacity:0;transition:.25s;pointer-events:none;display:flex;align-items:center;gap:8px;max-width:90vw}
