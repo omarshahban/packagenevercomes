@@ -90,7 +90,7 @@
   .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,200px),1fr));gap:14px;padding-bottom:30px}
   .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;display:flex;flex-direction:column;box-shadow:var(--shadow);transition:transform .15s}
   .card:hover{transform:translateY(-3px)}
-  .thumb{position:relative;aspect-ratio:1/1;background:#fff;display:flex;align-items:center;justify-content:center;padding:14px;cursor:pointer}
+  .thumb{position:relative;height:200px;background:#fff;display:flex;align-items:center;justify-content:center;padding:14px;cursor:pointer}
   .thumb img{max-width:100%;max-height:100%;object-fit:contain}
   .deal{position:absolute;top:10px;left:10px;background:var(--coral);color:#fff;font-size:11px;font-weight:900;padding:3px 8px;border-radius:7px}
   .cbody{padding:11px 13px 13px;display:flex;flex-direction:column;gap:5px;flex:1}
@@ -302,6 +302,7 @@
     .detail-info .desc{margin:8px 0 10px;font-size:13px}
     .reviews{margin-top:12px;padding-top:10px}
     .grid{grid-template-columns:repeat(2,1fr);gap:10px}
+    .thumb{height:150px}
   }
 </style>
 </head>
@@ -616,7 +617,7 @@ function starRow(r){var f=Math.round(r),s="";for(var i=0;i<5;i++)s+=icon(i<f?"st
 function byId(id){return PRODUCTS.find(function(p){return p.id===id});}
 function toast(msg,ic,opts){opts=opts||{};var t=document.getElementById("toast");var btn=opts.btn?'<button class="toast-btn" onclick="'+(opts.act||'')+'">'+opts.btn+'</button>':'';t.innerHTML=(ic?icon(ic):"")+"<span>"+msg+"</span>"+btn;t.classList.add("show");clearTimeout(t._t);t._t=setTimeout(function(){t.classList.remove("show");},opts.dur||1900);}
 function setCap(html){var c=document.getElementById("mapcap");if(c)c.innerHTML='<span>'+html+'</span>';}
-function viewCart(){var t=document.getElementById("toast");t.classList.remove("show");openCart();}
+function viewCart(){var t=document.getElementById("toast");t.classList.remove("show");closeAll();openCart();}
 function shipBadge(p){return p.s==="five"?'<span class="shipbadge next">'+icon("clock")+' 5-minute delivery</span>':'<span class="shipbadge flash">'+icon("zap")+' 2-minute delivery</span>';}
 
 /* ---------- GRID ---------- */
